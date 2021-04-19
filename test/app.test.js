@@ -9,6 +9,6 @@ describe("Test paths", () => {
 
   test("Given valid request when GET /health then return OK", async () => {
     const response = await request(app).get("/health");
-    expect(response.statusCode).toBe(200);p
+    expect(response.statusCode).toBe(200);
   });
 });
