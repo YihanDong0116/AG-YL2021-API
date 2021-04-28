@@ -32,7 +32,7 @@
     },
     "/courses/{course_id}": {
       "get": {
-        "description": "Returns a single course",
+        "description": "Returns a single course, Use /courses/correct_course_id for correct response",
         "parameters": [
           {
             "name": "course_id",
@@ -69,7 +69,7 @@
     },
     "/pages/{page_id}": {
       "get": {
-        "description": "Returns a single page",
+        "description": "Returns a single page, Use /pages/correct_page_id for correct response",
         "parameters": [
           {
             "name": "page_id",
@@ -106,7 +106,7 @@
     },
     "/pages/{page_id}/submit": {
       "post": {
-        "description": "submitting to a problem page",
+        "description": "submitting to a problem page, Use /pages/correct_page_id/submit for correct response",
         "parameters": [
           {
             "name": "page_id",
