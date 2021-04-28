@@ -2,18 +2,18 @@ module.exports = {
   verbose: true,
   collectCoverage: true,
   coverageReporters: [
-    "text", 
-    "html",
+    'text',
+    'html',
   ],
   collectCoverageFrom: [
-    "src/**/*.{js,jsx}",
-    "!**/*.test.{js,jsx}",
-    "!**/node_modules/**",
-    "!**/vendor/**",
-    "!src/bin/server.js",
-    "!src/routes/index.js",
-    "!src/app.js",
-    "!**/public/**"
+    'src/**/*.{js,jsx}',
+    '!**/*.test.{js,jsx}',
+    '!**/node_modules/**',
+    '!**/vendor/**',
+    '!src/bin/server.js',
+    '!src/routes/index.js',
+    '!src/app.js',
+    '!**/public/**',
   ],
   coverageThreshold: {
     global: {
