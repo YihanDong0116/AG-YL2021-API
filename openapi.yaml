@@ -1,0 +1,180 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+servers:
+  - url: https://api.server.test/v1
+paths:
+  /courses:
+    get:
+      description: Returns an array of all courses
+      responses:
+        '200':
+          description: OK
+          content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Course'
+  /courses/{course_id}:
+    get:
+      description: Returns a single course
+      parameters:
+        - name: course_id
+          in: path
+          schema:
+            $ref: '#/components/schemas/Id'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '404':
+          description: course_id does not exist!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /pages/{page_id}:
+    get:
+      description: Returns a single page
+      parameters:
+        - name: page_id
+          in: path
+          schema:
+            $ref: '#/components/schemas/Id'
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '404':
+          description: page_id does not exist!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /pages/{page_id}/submit:
+    post:
+      description: submitting to a problem page
+      parameters:
+        - name: page_id
+          in: path
+          schema:
+            $ref: '#/components/schemas/Id'
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Submission'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Results'
+        '404':
+          description: page_id does not exist!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: submission to info pages is forbidden!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Course:
+      type: object
+      properties:
+        course_id:
+          $ref: '#/components/schemas/Id'
+        name:
+          type: string
+        default_page:
+          description: the default page of the course
+          $ref: '#/components/schemas/Id'
+        pages:
+          description: all pages 
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Id'
+              next:
+                $ref: '#/components/schemas/Id'
+              prev:
+                $ref: '#/components/schemas/Id'
+    Page:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/Id'
+        type:
+          type: string
+          enum: 
+            - info
+            - problem
+        sections:
+          description: sections displayed on the page
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+        problem:
+          description: the problem contents if the page is a problem page
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - code
+                - text
+                - multichoice
+            data:
+              type: object
+        
+    Submission:
+      description: TBD
+      type: object
+    Results:
+      description: TBD
+      type: object
+    Id:
+      type: string
+      format: uuid
+    Section:
+      description: sections displayed on the pages
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - text
+            - image
+            - animation
+        content:
+          description: dependant on the section type
+          type: string
+    Error:
+      type: object
+

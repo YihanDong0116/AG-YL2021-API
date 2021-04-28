@@ -10,7 +10,10 @@ module.exports = {
     "!**/*.test.{js,jsx}",
     "!**/node_modules/**",
     "!**/vendor/**",
-    "!src/server.js",
+    "!src/bin/server.js",
+    "!src/routes/index.js",
+    "!src/app.js",
+    "!**/public/**"
   ],
   coverageThreshold: {
     global: {

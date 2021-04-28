@@ -2,13 +2,13 @@
   "name": "docker-heroku-cicd",
   "version": "1.0.0",
   "description": "A test repo for setting up CICD from a node application to be published on heroku",
-  "main": "src/server.js",
+  "main": "node src/bin/server.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
     "test": "jest --runInBand --coverage",
-    "start": "node src/server.js"
+    "start": "node src/bin/server.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,13 @@
   },
   "homepage": "https://github.com/maxplumley/node-docker-heroku-cicd#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "^4.17.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "jest": "^26.6.3",
