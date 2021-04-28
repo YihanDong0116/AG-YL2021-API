@@ -23,7 +23,7 @@ docker run -p 3000:3000 node-docker-heroku-cicd npm run test
 ## Start
 
 ``` shell script
-docker run -p 3000:3000 node-docker-heroku-cicd npm run start  
+docker run -p 3000:3000 node-docker-heroku-cicd npm run start
 ```
 
 ## Browse
