@@ -7,7 +7,7 @@ describe("Test paths", () => {
     expect(response.statusCode).toBe(200);
   });
 
-  test("Given valid request when GET /api then return OK", async () => {
+  test("Given valid request when GET /pages then return OK", async () => {
     const response = await request(app).get("/pages");
     expect(response.statusCode).toBe(200);
   });
