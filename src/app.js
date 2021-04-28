@@ -18,11 +18,18 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./public/openapi.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', indexRouter);
 app.use('/courses', coursesRouter);
 app.use('/pages', pagesRouter);
+
+app.get("/health", function (req, res) {
+  res.send("It's Alive!");
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
