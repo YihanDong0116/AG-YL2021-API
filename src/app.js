@@ -1,14 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var coursesRouter = require('./routes/courses');
-var pagesRouter = require('./routes/pages');
+const swaggerUi = require('swagger-ui-express');
+const indexRouter = require('./routes/index');
+const coursesRouter = require('./routes/courses');
+const pagesRouter = require('./routes/pages');
+const swaggerDocument = require('./public/openapi.json');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,25 +21,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./public/openapi.json');
-
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', indexRouter);
 app.use('/courses', coursesRouter);
 app.use('/pages', pagesRouter);
 
-app.get("/health", function (req, res) {
+app.get('/health', (req, res) => {
   res.send("It's Alive!");
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
