@@ -20,6 +20,7 @@ const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   const { port } = server.address();
 
+  // eslint-disable-next-line no-console
   console.log('API server listening at localhost:%s', port);
 });
 
