@@ -30,6 +30,11 @@ docker run -p 3000:3000 node-docker-heroku-cicd npm run start
 
 go to [https://localhost:3000]
 
+## Browse api documentation
+
+go to [https://localhost:3000/api-docs] or see [https://ag-2021-server.herokuapp.com/api-docs/#/]
+
+
 ## Stop
 
 find container ID
