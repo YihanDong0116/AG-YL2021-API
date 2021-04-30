@@ -1,15 +1,16 @@
-FROM node:15.14.0
-
-ENV PORT=3000
+# build environment
+FROM node:15.14.0 as build
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN yarn install
+COPY . ./
+RUN yarn build
 
-COPY . . 
-
-EXPOSE $PORT
-
-CMD ["npm", "run", "start"]
+# production environment
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

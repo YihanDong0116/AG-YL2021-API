@@ -1,0 +1,16 @@
+
+FROM node:15.14.0
+
+ENV PORT=3000
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN yarn install
+
+COPY . . 
+
+EXPOSE $PORT
+
+CMD ["yarn", "start"]

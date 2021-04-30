@@ -12,7 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Docker image
-      run: docker build ./api -t ag-api:$GITHUB_RUN_ID
+      working-directory: ./api
+      run: docker build -t ag-api:$GITHUB_RUN_ID
     - name: Lint
       run: docker run ag-api:$GITHUB_RUN_ID npm run lint
     - name: Run tests
@@ -23,9 +24,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Docker image
-      run: docker build ./ui -t ag-ui:$GITHUB_RUN_ID
+      working-directory: ./ui
+      run: docker build -f Dockerfile.dev -t ag-ui:$GITHUB_RUN_ID
     - name: Lint
-      run: docker run ag-ui:$GITHUB_RUN_ID npm run lint
+      run: docker run ag-ui:$GITHUB_RUN_ID yarn lint
     - name: Run tests
-      run: docker run ag-ui:$GITHUB_RUN_ID npm run test
+      run: docker run ag-ui:$GITHUB_RUN_ID yarn test
     

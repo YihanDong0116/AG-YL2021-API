@@ -16,6 +16,7 @@ jobs:
           healthcheck: https://${{ env.APP_NAME }}.herokuapp.com/health
           usedocker: true
           branch: ${GITHUB_REF}
+          appdir: api
         env: 
           APP_NAME: ag-2021-api
 
@@ -31,5 +32,6 @@ jobs:
           healthcheck: https://${{ env.APP_NAME }}.herokuapp.com
           usedocker: true
           branch: ${GITHUB_REF}
+          appdir: ui
         env: 
           APP_NAME: ag-2021-ui
