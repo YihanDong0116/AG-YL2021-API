@@ -17,6 +17,7 @@ jobs:
           usedocker: true
           branch: ${GITHUB_REF}
           appdir: api
+          delay: 30
         env: 
           APP_NAME: ag-2021-api
 
@@ -33,5 +34,6 @@ jobs:
           usedocker: true
           branch: ${GITHUB_REF}
           appdir: ui
+          delay: 30
         env: 
           APP_NAME: ag-2021-ui
