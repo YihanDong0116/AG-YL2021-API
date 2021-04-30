@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Docker image
-      run: docker build ./ui -t ag-api:$GITHUB_RUN_ID
+      run: docker build ./ui -t ag-ui:$GITHUB_RUN_ID
     - name: Lint
       run: docker run ag-ui:$GITHUB_RUN_ID npm run lint
     - name: Run tests

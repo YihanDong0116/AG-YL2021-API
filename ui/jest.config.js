@@ -2,7 +2,7 @@ module.exports = {
   verbose: true,
   collectCoverage: true,
   coverageReporters: [
-    "text", 
+    "text",
     "html",
   ],
   collectCoverageFrom: [
