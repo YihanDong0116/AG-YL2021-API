@@ -25,8 +25,8 @@ app.use(cookieParser());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', indexRouter);
-app.use('/v1/courses', coursesRouter);
-app.use('/v1/pages', pagesRouter);
+app.use('/courses', coursesRouter);
+app.use('/pages', pagesRouter);
 
 app.get('/health', (req, res) => {
   res.send("It's Alive!");
