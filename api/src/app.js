@@ -8,7 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
 const pagesRouter = require('./routes/pages');
-const swaggerDocument = require('./public/openapi.json');
+const swaggerDocument = require('./public/api.json');
 
 const app = express();
 

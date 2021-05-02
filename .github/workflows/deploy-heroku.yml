@@ -3,7 +3,8 @@ name: Deploy
 on: workflow_dispatch
 
 jobs:
-  build:
+
+  deploy-api:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,5 +16,24 @@ jobs:
           healthcheck: https://${{ env.APP_NAME }}.herokuapp.com/health
           usedocker: true
           branch: ${GITHUB_REF}
+          appdir: api
+          delay: 30
         env: 
-          APP_NAME: ag-2021-server
+          APP_NAME: ag-2021-api
+
+  deploy-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ env.APP_NAME }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          healthcheck: https://${{ env.APP_NAME }}.herokuapp.com
+          usedocker: true
+          branch: ${GITHUB_REF}
+          appdir: ui
+          delay: 30
+        env: 
+          APP_NAME: ag-2021-ui
