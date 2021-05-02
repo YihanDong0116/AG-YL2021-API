@@ -2,9 +2,10 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-
+const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
+
+const log = require('./util/log');
 const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
 const pagesRouter = require('./routes/pages');
@@ -16,7 +17,8 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
+app.use(morgan('combined', { stream: log.stream }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

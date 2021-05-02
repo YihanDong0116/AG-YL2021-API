@@ -6,13 +6,14 @@
   },
   "servers": [
     {
-      "url": "https://api.server.test/v1"
+      "url": "http://ag-2021-api.herokuapp.com"
     }
   ],
   "paths": {
     "/courses": {
       "get": {
-        "description": "Returns an array of all courses",
+        "operationId": "getAllCourses",
+        "description": "Returns all courses",
         "responses": {
           "200": {
             "description": "OK",
@@ -30,12 +31,14 @@
         }
       }
     },
-    "/courses/{course_id}": {
+    "/courses/{id}": {
       "get": {
-        "description": "Returns a single course",
+        "operationId": "getCourse",
+        "description": "Returns a single course by ID",
         "parameters": [
           {
-            "name": "course_id",
+            "description": "The ID of the course",
+            "name": "id",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/Id"
@@ -45,7 +48,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "The course",
             "content": {
               "application/json": {
                 "schema": {
@@ -55,7 +58,7 @@
             }
           },
           "404": {
-            "description": "course_id does not exist!",
+            "description": "Course does not exist",
             "content": {
               "application/json": {
                 "schema": {
@@ -67,12 +70,14 @@
         }
       }
     },
-    "/pages/{page_id}": {
+    "/pages/{id}": {
       "get": {
-        "description": "Returns a single page",
+        "operationId": "getPage",
+        "description": "Returns a single page by ID",
         "parameters": [
           {
-            "name": "page_id",
+            "description": "The page ID",
+            "name": "id",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/Id"
@@ -82,7 +87,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "The page",
             "content": {
               "application/json": {
                 "schema": {
@@ -92,7 +97,7 @@
             }
           },
           "404": {
-            "description": "page_id does not exist!",
+            "description": "Page does not exist",
             "content": {
               "application/json": {
                 "schema": {
@@ -104,12 +109,14 @@
         }
       }
     },
-    "/pages/{page_id}/submit": {
+    "/pages/{id}/submit": {
       "post": {
-        "description": "submitting to a problem page",
+        "operationId": "createPageSubmission",
+        "description": "Submits a solution to a page for marking",
         "parameters": [
           {
-            "name": "page_id",
+            "description": "The page ID",
+            "name": "id",
             "in": "path",
             "schema": {
               "$ref": "#/components/schemas/Id"
@@ -128,7 +135,7 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "The results for the submission",
             "content": {
               "application/json": {
                 "schema": {
@@ -148,7 +155,7 @@
             }
           },
           "403": {
-            "description": "submission to info pages is forbidden!",
+            "description": "submission to the pages is forbidden because the page type does not accept submissions",
             "content": {
               "application/json": {
                 "schema": {
@@ -158,7 +165,7 @@
             }
           },
           "404": {
-            "description": "page_id does not exist!",
+            "description": "Page does not exist!",
             "content": {
               "application/json": {
                 "schema": {
@@ -176,61 +183,91 @@
       "Course": {
         "type": "object",
         "properties": {
-          "course_id": {
+          "id": {
+            "description": "THe unique ID of the course",
             "$ref": "#/components/schemas/Id"
           },
           "name": {
+            "description": "The name of the course",
             "type": "string"
           },
-          "default_page": {
-            "description": "the default page of the course",
+          "firstPage": {
+            "description": "The ID of the first page of the course",
             "$ref": "#/components/schemas/Id"
           },
           "pages": {
-            "description": "all pages",
+            "description": "The list of pages for the course",
             "type": "array",
             "items": {
               "type": "object",
               "properties": {
                 "id": {
+                  "description": "The ID of the course page",
                   "$ref": "#/components/schemas/Id"
+                },
+                "type": {
+                  "description": "The type of the course page",
+                  "$ref": "#/components/schemas/Page/properties/type"
                 },
                 "next": {
+                  "description": "The ID of the next page in the course, not applicable for the last page in the course",
                   "$ref": "#/components/schemas/Id"
                 },
-                "prev": {
+                "previous": {
+                  "description": "The ID of the previous page in the course, not applicable for the first page in the course",
                   "$ref": "#/components/schemas/Id"
                 }
-              }
-            }
+              },
+              "readOnly": true,
+              "required": [
+                "id",
+                "type"
+              ]
+            },
+            "minItems": 1
           }
-        }
+        },
+        "readOnly": true,
+          "required": [
+            "id",
+            "name",
+            "firstPage",
+            "pages"
+          ]
+        
       },
       "Page": {
         "type": "object",
         "properties": {
           "id": {
+            "description": "The unique ID for the page",
             "$ref": "#/components/schemas/Id"
           },
+          "title": {
+            "description": "The title for the page",
+            "type": "string"
+          },
           "type": {
+            "description": "The type of the page",
             "type": "string",
             "enum": [
-              "info",
-              "problem"
+              "learn",
+              "practice"
             ]
           },
           "sections": {
-            "description": "sections displayed on the page",
+            "description": "The sections of the page, only applicable for learn type pages",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Section"
             }
           },
           "problem": {
-            "description": "the problem contents if the page is a problem page",
+            "description": "The practice problem for the page, only applicable for practice type pages ",
             "type": "object",
             "properties": {
               "type": {
+                "description": "The type of the practice problem",
                 "type": "string",
                 "enum": [
                   "code",
@@ -238,30 +275,115 @@
                   "multichoice"
                 ]
               },
+              "question": {
+                "description": "The problem question prompt to display",
+                "type": "string"
+              },
               "data": {
+                "description": "The data used to display and submit a solution to the problem, dependent on problem type",
                 "type": "object"
               }
-            }
+            },
+            "required": [
+              "type",
+              "question",
+              "data"
+            ],
+            "readOnly": true
           }
-        }
+        },
+        "required": [
+          "id",
+          "type"
+        ],
+        "readOnly": true
       },
       "Submission": {
-        "description": "TBD",
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "The type of the submission",
+            "type": "string",
+            "enum": [
+              "code",
+              "text",
+              "eventStream"
+            ]
+          },
+          "data": {
+            "description": "The data for the submission, dependent on submission type",
+            "type": "object"
+          }
+        },
+        "required": [
+          "type",
+          "data"
+        ]
       },
       "Results": {
-        "description": "TBD",
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "status": {
+            "description": "The overall status of the submission",
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail"
+            ]
+          },
+          "tests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "description": "The type of the test case",
+                  "type": "string",
+                  "enum": [
+                    "sample",
+                    "hidden"
+                  ]
+                },
+                "name": {
+                  "description": "Then name of the executed test case, not provided for hidden test cases",
+                  "type": "string"
+                },
+                "result": {
+                  "description": "The result of executing the submission against this test case",
+                  "type": "string",
+                  "enum": [
+                    "pass",
+                    "fail"
+                  ]
+                },
+                "feedback": {
+                  "description": "A short description of how to improve the submission to pass the test case, not provided for hidden test cases",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "result"
+              ],
+              "readOnly": true,
+              "minItems": 1
+            }
+          }
+        },
+        "required": [
+          "status",
+          "tests"
+        ]
       },
       "Id": {
         "type": "string",
         "format": "uuid"
       },
       "Section": {
-        "description": "sections displayed on the pages",
         "type": "object",
         "properties": {
           "type": {
+            "description": "The type of the section",
             "type": "string",
             "enum": [
               "text",
@@ -270,13 +392,38 @@
             ]
           },
           "content": {
-            "description": "dependant on the section type",
-            "type": "string"
+            "description": "The content to present for the section, dependant on the section type"
           }
-        }
+        },
+        "readOnly": true,
+        "required": [
+          "type",
+          "content"
+        ]
       },
       "Error": {
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "status": {
+            "description": "The HTTP status code of error",
+            "type": "integer",
+            "format": "uint32"
+          },
+          "message": {
+            "description": "The HTTP message for error",
+            "type": "string"
+          },
+          "reason": {
+            "description": "An informative reason for error response",
+            "type": "string"
+          }
+        },
+        "readOnly": true,
+        "required": [
+          "status",
+          "message",
+          "reason"
+        ]
       }
     }
   }

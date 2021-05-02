@@ -12,6 +12,7 @@ module.exports = {
     '!**/vendor/**',
     '!src/bin/server.js',
     '!src/routes/index.js',
+    '!src/util/log.js',
     '!src/app.js',
     '!**/public/**',
   ],

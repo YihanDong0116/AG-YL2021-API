@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-
+const log = require('../util/log');
 const app = require('../app');
 
 /**
@@ -18,9 +18,8 @@ const PORT = process.env.PORT || 3000;
  */
 
 const server = app.listen(PORT, () => {
-  const { port } = server.address();
-
-  console.log('API server listening at localhost:%s', port);
+  const { address, port } = server.address();
+  log.info(`AG API server listening at ${address}:${port}`);
 });
 
 module.exports = server;
