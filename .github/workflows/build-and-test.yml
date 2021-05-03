@@ -10,11 +10,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Build Docker image
+      run: docker build . -t ag-api:$GITHUB_RUN_ID
     - uses: actions/checkout@v2
     - name: Lint
       run: docker run ag-api:$GITHUB_RUN_ID npm run lint
-    - name: Build Docker image
-      run: docker build . -t ag-api:$GITHUB_RUN_ID
     - name: Run tests
       run: docker run ag-api:$GITHUB_RUN_ID npm run test
     
