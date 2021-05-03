@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest --runInBand --coverage",
     "start": "node src/bin/server.js",
-    "lint": "eslint src/**/*.js test/**/*.js"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
