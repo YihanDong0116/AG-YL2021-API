@@ -9,7 +9,7 @@ const log = require('./util/log');
 const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
 const pagesRouter = require('./routes/pages');
-const swaggerDocument = require('./public/api.json');
+const swaggerDocument = require('./api.json');
 
 const app = express();
 
