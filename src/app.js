@@ -11,7 +11,7 @@ const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
 const pagesRouter = require('./routes/pages');
 const swaggerDocument = require('./api.json');
-
+const cors = require("cors")
 const app = express();
 
 const corsOptions = {
