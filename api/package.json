@@ -23,6 +23,7 @@
   "homepage": "https://github.com/maxplumley/node-docker-heroku-cicd#readme",
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "eslint-plugin-jest": "^24.3.6",
     "express": "^4.17.1",

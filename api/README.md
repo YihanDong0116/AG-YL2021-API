@@ -28,7 +28,8 @@ docker run -p 3000:3000 node-docker-heroku-cicd npm run start
 
 ## Browse
 
-go to [https://localhost:3000]
+go to [https://localhost:3001]
+for Swagger UI API documentation go to [https://localhost:3001/api-docs]
 
 ## Stop
 
@@ -48,7 +49,9 @@ docker stop <container ID>
 
 This project uses [OpenAPI Generator](https://openapi-generator.tech/) to generate client code for the Algorithm API
 
-Generating a client is easy
+There is a GitHub action configured to generate and publish this client to the NPM registry, if for some reason you need to do this manually follow the steps below.
+
+Generate the client
 
 ``` shell script
 npx openapi-generator-cli generate -g javascript --additional-properties=usePromises=true -o client -i ./src/public/api.json
@@ -73,3 +76,6 @@ publish
 ``` shell script
 npm publish
 ```
+
+it is not possible to republish packages to the NPM registry, if you need to publish changes be sure to update the version according to [semver](https://semver.org/) rules, most likely you will just need to bump the patch version of the OpenAPI specification at /src/api.json
+
