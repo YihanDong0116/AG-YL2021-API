@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
-const cors = require('cors');
 
 const log = require('./util/log');
 const indexRouter = require('./routes/index');
