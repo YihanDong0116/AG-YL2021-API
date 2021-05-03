@@ -4,14 +4,23 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
+const cors = require('cors');
 
 const log = require('./util/log');
 const indexRouter = require('./routes/index');
 const coursesRouter = require('./routes/courses');
 const pagesRouter = require('./routes/pages');
-const swaggerDocument = require('./public/api.json');
+const swaggerDocument = require('./api.json');
 
 const app = express();
+
+const corsOptions = {
+  origin: '*',
+};
+app.use(cors(corsOptions));
+
+// disable etags to prevent 304 being returned to clients
+app.disable('etag');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,10 +32,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/', indexRouter);
 app.use('/courses', coursesRouter);
 app.use('/pages', pagesRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/', indexRouter);
 
 app.get('/health', (req, res) => {
   res.send("It's Alive!");

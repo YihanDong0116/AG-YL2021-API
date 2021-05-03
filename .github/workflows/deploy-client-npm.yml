@@ -1,0 +1,20 @@
+name: Publish Client to NPM Registry
+
+on: workflow_dispatch
+
+jobs:
+
+  deploy-client:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '15'
+    - run: npm install -g openapi-generator-cli
+    - run: npx openapi-generator-cli generate -g javascript --additional-properties=usePromises=true -o client -i ./src/public/api.json
+    - run: cd ./client
+    - uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
+    

@@ -2,11 +2,15 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Algorithms API",
-    "version": "1.0"
+    "version": "1.0.1"
   },
   "servers": [
     {
-      "url": "http://ag-2021-api.herokuapp.com"
+      "url": "https://ag-2021-api.herokuapp.com", 
+      "description": "production"
+    }, {
+      "url": "http://localhost:8080", 
+      "description": "local"
     }
   ],
   "paths": {
@@ -207,7 +211,7 @@
                 },
                 "type": {
                   "description": "The type of the course page",
-                  "$ref": "#/components/schemas/Page/properties/type"
+                  "$ref": "#/components/schemas/PageType"
                 },
                 "next": {
                   "description": "The ID of the next page in the course, not applicable for the last page in the course",
@@ -236,6 +240,13 @@
           ]
         
       },
+      "PageType": {
+        "type": "string",
+        "enum": [
+          "learn",
+          "practice"
+        ]
+      },
       "Page": {
         "type": "object",
         "properties": {
@@ -249,11 +260,7 @@
           },
           "type": {
             "description": "The type of the page",
-            "type": "string",
-            "enum": [
-              "learn",
-              "practice"
-            ]
+            "$ref": "#/components/schemas/PageType"
           },
           "sections": {
             "description": "The sections of the page, only applicable for learn type pages",
