@@ -14,6 +14,8 @@ jobs:
     - run: npm install @openapitools/openapi-generator-cli -g
     - run: npx openapi-generator-cli generate -g javascript --additional-properties=usePromises=true -o client -i ./src/api.json
     - run: cd ./client
+    - run: npm install 
+      working-directory: ./client
     - uses: JS-DevTools/npm-publish@v1
       with:
         token: ${{ secrets.NPM_TOKEN }}
