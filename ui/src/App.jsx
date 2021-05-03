@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import api from './api';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const [courses, setCoursesList] = useState('No courses yet!');
+  const [loading, setLoading] = useState(false);
+
+  const getCoursesList = () => {
+    setLoading(true);
+    api.getAllCourses()
+      .then((res) => {
+        setCoursesList(res);
+        setLoading(false);
+      });
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -14,14 +27,14 @@ function App() {
           {' '}
           and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          disabled={loading}
+          type="button"
+          onClick={() => getCoursesList()}
         >
-          Learn React
-        </a>
+          Get Courses
+        </button>
+        <p>{JSON.stringify(courses)}</p>
       </header>
     </div>
   );
