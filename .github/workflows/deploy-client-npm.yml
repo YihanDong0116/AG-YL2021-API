@@ -11,10 +11,13 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '15'
-    - run: npm install -g openapi-generator-cli
-    - run: npx openapi-generator-cli generate -g javascript --additional-properties=usePromises=true -o client -i ./src/public/api.json
+    - run: npm install @openapitools/openapi-generator-cli -g
+    - run: npx openapi-generator-cli generate -g javascript --additional-properties=usePromises=true -o client -i ./src/api.json
     - run: cd ./client
+    - run: npm install 
+      working-directory: ./client
     - uses: JS-DevTools/npm-publish@v1
       with:
         token: ${{ secrets.NPM_TOKEN }}
+        package: ./client/package.json
     
