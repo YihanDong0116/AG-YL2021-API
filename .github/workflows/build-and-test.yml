@@ -11,10 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '15'
+    - name: Lint
+      run: npm run lint
     - name: Build Docker image
       run: docker build . -t ag-api:$GITHUB_RUN_ID
-    - name: Lint
-      run: docker run ag-api:$GITHUB_RUN_ID npm run lint
     - name: Run tests
       run: docker run ag-api:$GITHUB_RUN_ID npm run test
     
