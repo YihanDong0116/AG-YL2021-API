@@ -3,7 +3,8 @@ name: Deploy
 on: workflow_dispatch
 
 jobs:
-  build:
+
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,5 +16,6 @@ jobs:
           healthcheck: https://${{ env.APP_NAME }}.herokuapp.com/health
           usedocker: true
           branch: ${GITHUB_REF}
+          delay: 30
         env: 
-          APP_NAME: ag-2021-server
+          APP_NAME: ag-2021-api

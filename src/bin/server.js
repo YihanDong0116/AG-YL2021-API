@@ -3,14 +3,14 @@
 /**
  * Module dependencies.
  */
-
+const log = require('../util/log');
 const app = require('../app');
 
 /**
  * Get port from environment and store in Express.
  */
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 /**
  * Create HTTP server.
@@ -18,10 +18,8 @@ const PORT = process.env.PORT || 3000;
  */
 
 const server = app.listen(PORT, () => {
-  const { port } = server.address();
-
-  // eslint-disable-next-line no-console
-  console.log('API server listening at localhost:%s', port);
+  const { address, port } = server.address();
+  log.info(`AG API server listening at ${address}:${port}`);
 });
 
 module.exports = server;

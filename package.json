@@ -1,7 +1,7 @@
 {
-  "name": "docker-heroku-cicd",
+  "name": "ag-api",
   "version": "1.0.0",
-  "description": "A test repo for setting up CICD from a node application to be published on heroku",
+  "description": "API for Algorithms in Grok Project",
   "main": "node src/bin/server.js",
   "directories": {
     "test": "test"
@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest --runInBand --coverage",
     "start": "node src/bin/server.js",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -30,15 +30,15 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.2.6",
     "eslint": "^7.25.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^26.6.3",
     "nyc": "^15.1.0",
     "superagent": "^6.1.0",
