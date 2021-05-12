@@ -30,8 +30,10 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
+    "node-fetch": "^2.6.1",
     "swagger-ui-express": "^4.1.6",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.2.6",
