@@ -1,9 +1,9 @@
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
 
-class courseLoader {
+class CourseLoader {
   constructor() {
-    var data = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'algorithms.json'), 'utf8'));
+    const data = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'algorithms.json'), 'utf8'));
     this.courseData = data;
   }
 
@@ -19,19 +19,19 @@ class courseLoader {
   hasId(id) {
     let found = false;
     this.courseData.forEach((element) => {
-      if (element.id == id) found = true;
+      if (element.id === id) found = true;
     });
     return found;
   }
 
   /* get a course by id */
   getById(id) {
-    let res = this.courseData.find((course) => id == course.id);
+    const res = this.courseData.find((course) => id === course.id);
     if (res) return res;
-    else alert('No courses found by that ID');
+    return undefined;
   }
 }
 
-const courseloader = new courseLoader();
+const courseloader = new CourseLoader();
 
 module.exports = courseloader;

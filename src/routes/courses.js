@@ -1,18 +1,16 @@
 const express = require('express');
-const courseloader = require('../util/loadCourses')
-const router = express.Router();
+const courseloader = require('../util/loadCourses');
 
+const router = express.Router();
 
 /* GET courses listing. */
 router.get('/', (req, res) => {
-  res.json(courseloader.courseData)
+  res.json(courseloader.courseData);
 });
-
 
 /* GET specific course. */
 router.get('/:course_id', (req, res) => {
-  console.log('parameters type :' + typeof(req.params.course_id))
-  if (courseloader.hasId(req.params.course_id) == true) {
+  if (courseloader.hasId(req.params.course_id) === true) {
     res.status(200);
     res.json(courseloader.getById(req.params.course_id));
   } else {
