@@ -1,10 +1,8 @@
-const path = require('path');
-const fs = require('fs');
+const courseList = require('../courses');
 
 class CourseLoader {
   constructor() {
-    const data = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'algorithms.json'), 'utf8'));
-    this.courseData = data;
+    this.courselist = courseList;
   }
 
   /* get a course by name */
@@ -15,20 +13,37 @@ class CourseLoader {
   //   return this.courseData.find((course) => name === course.name)
   // }
 
-  /* check existence of a course with certain id */
-  hasId(id) {
-    let found = false;
-    this.courseData.forEach((element) => {
-      if (element.id === id) found = true;
+  /* get all courses name and id */
+  getCourses() {
+    const res = [];
+    this.courselist.forEach((course) => {
+      const summary = {
+        name: course.name,
+        id: course.id,
+      };
+      res.push(summary);
     });
-    return found;
+    return res;
+  }
+
+  /* check existence of a course with certain id */
+  hasCourse(id) {
+    let res = false;
+    this.courselist.forEach((course) => {
+      if (course.id === id) {
+        res = true;
+      }
+    });
+    return res;
   }
 
   /* get a course by id */
-  getById(id) {
-    const res = this.courseData.find((course) => id === course.id);
-    if (res) return res;
-    return undefined;
+  getCourseById(id) {
+    let res = {};
+    this.courselist.forEach((course) => {
+      if (course.id === id) res = course;
+    });
+    return res;
   }
 }
 
