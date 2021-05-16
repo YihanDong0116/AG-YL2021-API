@@ -5,7 +5,6 @@ const router = express.Router();
 
 /* GET courses listing. */
 router.get('/', (req, res) => {
-  console.log(courseloader.getCourses());
   res.json(courseloader.getCourses());
 });
 
