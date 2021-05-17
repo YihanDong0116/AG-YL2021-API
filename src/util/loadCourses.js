@@ -18,8 +18,10 @@ class CourseLoader {
     const res = [];
     this.courselist.forEach((course) => {
       const summary = {
-        name: course.name,
         id: course.id,
+        name: course.name,
+        firstPage: course.firstPage.id,
+        pages: course.pages
       };
       res.push(summary);
     });
