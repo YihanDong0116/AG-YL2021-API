@@ -16,15 +16,23 @@ class CourseLoader {
   /* get all courses name and id */
   getCourses() {
     const res = [];
+    // get the information of each course
     this.courselist.forEach((course) => {
       const pagesInfo = [];
+      // get the information of each page in the required format
       course.pages.forEach((page) => {
         const pageInfo = {
           id: page.id,
           type: page.type,
-          next: page.next,
-          previous: page.previous,
         };
+        // identify if the "next" key or the "previous" key exists
+        if ('next' in page) {
+          pageInfo.next = page.next;
+        }
+        if ('previous' in page) {
+          pageInfo.previous = page.previous;
+        }
+        // push the page information into the page information set
         pagesInfo.push(pageInfo);
       });
       const summary = {
@@ -33,8 +41,10 @@ class CourseLoader {
         firstPage: course.firstPage.id,
         pages: pagesInfo,
       };
+      // push the course information into the course information set
       res.push(summary);
     });
+    // return the course information
     return res;
   }
 
