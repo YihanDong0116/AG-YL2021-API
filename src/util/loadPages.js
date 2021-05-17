@@ -1,9 +1,10 @@
 const courseList = require('../courses');
+
 const pagelist = [];
 courseList.forEach((course) => {
-    course.pages.forEach((page) => {
-        pagelist.push(page);
-    });
+  course.pages.forEach((page) => {
+    pagelist.push(page);
+  });
 });
 
 class PageLoader {
@@ -11,15 +12,15 @@ class PageLoader {
     this.pagelist = pagelist;
   }
 
-  /* get all pages id and type*/
+  /* get all pages id and type */
   getPages() {
     const res = [];
     this.pagelist.forEach((page) => {
-        const summary = {
-            id: page.id,
-            type: page.type,
-            };
-            res.push(summary);
+      const summary = {
+        id: page.id,
+        type: page.type,
+      };
+      res.push(summary);
     });
     return res;
   }
