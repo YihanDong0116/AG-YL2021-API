@@ -17,11 +17,21 @@ class CourseLoader {
   getCourses() {
     const res = [];
     this.courselist.forEach((course) => {
+      const pagesInfo = [];
+      course.pages.forEach((page) => {
+        const pageInfo = {
+          id: page.id,
+          type: page.type,
+          next: page.next,
+          previous: page.previous,
+        };
+        pagesInfo.push(pageInfo);
+      });
       const summary = {
         id: course.id,
         name: course.name,
         firstPage: course.firstPage.id,
-        pages: course.pages
+        pages: pagesInfo,
       };
       res.push(summary);
     });
