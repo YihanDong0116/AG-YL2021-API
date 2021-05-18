@@ -22,6 +22,11 @@ describe('Test paths', () => {
     expect(response.statusCode).toBe(200);
   });
 
+  test('Given invalid request when GET /courses/incorrect_course_id then return 404', async () => {
+    const response = await request(app).get('/courses/abcde');
+    expect(response.statusCode).toBe(404);
+  });
+
   test('Given invalid request when GET /courses/wrong_id then return 404', async () => {
     const response = await request(app).get('/courses/wrong_id');
     expect(response.statusCode).toBe(404);

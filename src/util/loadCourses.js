@@ -89,6 +89,7 @@ class CourseLoader {
     });
     return res;
   }
+
 }
 
 const courseloader = new CourseLoader();
