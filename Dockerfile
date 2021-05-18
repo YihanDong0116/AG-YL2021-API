@@ -1,6 +1,6 @@
 FROM node:15.14.0
 
-ENV PORT=3000
+ENV PORT=3001
 
 WORKDIR /app
 
