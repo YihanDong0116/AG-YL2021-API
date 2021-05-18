@@ -18,7 +18,7 @@ describe('Test paths', () => {
   });
 
   test('Given valid request when GET /courses/correct_course_id then return OK', async () => {
-    const response = await request(app).get('/courses/correct_course_id');
+    const response = await request(app).get('/courses/3fa85f64-5717-4562-b3fc-2c963f66afa6');
     expect(response.statusCode).toBe(200);
   });
 

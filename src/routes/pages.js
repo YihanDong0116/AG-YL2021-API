@@ -1,13 +1,13 @@
 const express = require('express');
-const pageloader = require('../util/loadPages');
+const courseloader = require('../util/loadCourses');
 
 const router = express.Router();
 
 /* GET specific page. */
 router.get('/:page_id', (req, res) => {
-  if (pageloader.hasPage(req.params.page_id) === true) {
+  if (courseloader.hasPage(req.params.page_id) === true) {
     res.status(200);
-    res.json(pageloader.getPageById(req.params.page_id));
+    res.json(courseloader.getPageById(req.params.page_id));
   } else {
     res.status(404);
     res.send('page_id does not exist!');
