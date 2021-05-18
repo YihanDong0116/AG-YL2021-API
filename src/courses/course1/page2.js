@@ -2,6 +2,7 @@ const uuid = require('uuid');
 
 module.exports = {
   id: uuid.v4(),
+  title: 'Dijkstra learn page 1',
   type: 'learn',
   sections: [
     {

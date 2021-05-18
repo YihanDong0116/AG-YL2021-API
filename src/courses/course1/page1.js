@@ -2,6 +2,7 @@ const uuid = require('uuid');
 
 module.exports = {
   id: uuid.v4(),
+  title: 'Dijkstra practice page 1',
   type: 'practice',
   sections: [],
   problem: {
