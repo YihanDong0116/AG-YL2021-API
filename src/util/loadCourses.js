@@ -5,14 +5,6 @@ class CourseLoader {
     this.courselist = courseList;
   }
 
-  /* get a course by name */
-
-  // Currently I'm not so sure if we need this function, will just leave it here
-
-  // getByName(name) {
-  //   return this.courseData.find((course) => name === course.name)
-  // }
-
   /* get all courses name and id */
   getCourses() {
     const res = [];
