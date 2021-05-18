@@ -1,5 +1,8 @@
+const uuid = require('uuid');
+
 module.exports = {
-  id: '3fa85f64-5717-4562-b3fc-2c963f66afa1',
+  id: uuid.v4(),
+  title: 'Dijkstra practice page 1',
   type: 'practice',
   sections: [],
   problem: {
@@ -20,5 +23,4 @@ module.exports = {
       check: (inputs) => inputs.id === 'red',
     },
   ],
-  next: '3fa85f64-5717-4562-b3fc-2c963f66afa2',
 };
