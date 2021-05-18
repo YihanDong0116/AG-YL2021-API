@@ -33,7 +33,7 @@ describe('Test paths', () => {
   });
 
   test('Given valid request when GET /pages/correct_page_id then return OK', async () => {
-    const response = await request(app).get('/pages/correct_page_id');
+    const response = await request(app).get('/pages/3fa85f64-5717-4562-b3fc-2c963f66afa1');
     expect(response.statusCode).toBe(200);
   });
 

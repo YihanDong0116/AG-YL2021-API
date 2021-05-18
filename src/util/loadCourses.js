@@ -67,6 +67,28 @@ class CourseLoader {
     });
     return res;
   }
+
+  /* check existence of a page with certain id */
+  hasPage(id) {
+    let res = false;
+    this.courselist.forEach((course) => {
+      course.pages.forEach((page) => {
+        if (page.id === id) res = true;
+      });
+    });
+    return res;
+  }
+
+  /* get a page by id */
+  getPageById(id) {
+    let res = {};
+    this.courselist.forEach((course) => {
+      course.pages.forEach((page) => {
+        if (page.id === id) res = page;
+      });
+    });
+    return res;
+  }
 }
 
 const courseloader = new CourseLoader();
