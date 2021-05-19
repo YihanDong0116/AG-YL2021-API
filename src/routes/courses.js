@@ -17,10 +17,10 @@ router.get('/:course_id', (req, res) => {
   } else {
     res.status(404);
     res.json({
-      "status": 0,
-      "message": "Failed to find the course ID",
-      "reason": "Course ID does not exist"
-  });
+      status: 0,
+      message: 'Failed to find the course ID',
+      reason: 'Course ID does not exist'
+    });
   }
 });
 
