@@ -16,7 +16,11 @@ router.get('/:course_id', (req, res) => {
     res.json(courseloader.getCourseById(req.params.course_id));
   } else {
     res.status(404);
-    res.send('course_id does not exist!');
+    res.json({
+      "status": 0,
+      "message": "Failed to find the course ID",
+      "reason": "Course ID does not exist"
+  });
   }
 });
 
