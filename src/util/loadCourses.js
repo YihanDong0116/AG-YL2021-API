@@ -55,7 +55,31 @@ class CourseLoader {
   getCourseById(id) {
     let res = {};
     this.courselist.forEach((course) => {
-      if (course.id === id) res = course;
+      if (course.id === id) {
+        const pagesInfo = [];
+        course.pages.forEach((page) => {
+          const pageInfo = {
+            id: page.id,
+            type: page.type,
+          };
+          // identify if the "next" key or the "previous" key exists
+          if ('next' in page) {
+            pageInfo.next = page.next;
+          }
+          if ('previous' in page) {
+            pageInfo.previous = page.previous;
+          }
+          // push the page information into the page information set
+          pagesInfo.push(pageInfo);
+        });
+        const summary = {
+          id: course.id,
+          name: course.name,
+          firstPage: course.firstPage.id,
+          pages: pagesInfo,
+        };
+        res = summary;
+      }
     });
     return res;
   }
