@@ -17,7 +17,6 @@ router.get('/:course_id', (req, res) => {
   } else {
     res.status(404);
     res.json({
-      status: 404,
       message: 'Course ID does not exist',
     });
   }
