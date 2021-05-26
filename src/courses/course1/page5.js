@@ -7,7 +7,7 @@ module.exports = {
   sections: [
     {
       type: 'image',
-      content: '/src/public/image/direct-graph.png',
+      content: './direct-graph.png',
     },
     {
       type: 'text',
