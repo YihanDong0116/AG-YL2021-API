@@ -2,20 +2,16 @@ const uuid = require('uuid');
 
 module.exports = {
   id: uuid.v4(),
-  title: 'Dijkstra learn page 1',
+  title: 'Dijkstra’s Algorithm',
   type: 'learn',
   sections: [
     {
       type: 'image',
-      content: 'https://i.redd.it/tfugj4n3l6ez.png',
-    },
-    {
-      type: 'animation',
-      content: 'https://www.youtube.com/watch?v=k6Es9Qrh4Ao',
+      content: '/src/image/australian-map.png',
     },
     {
       type: 'text',
-      content: 'viva la dijkstra',
+      content: 'This route from Sydney to Perth was planned by Google Maps in seconds, how would you plan this route, how long would it take you?',
     },
   ],
 };
