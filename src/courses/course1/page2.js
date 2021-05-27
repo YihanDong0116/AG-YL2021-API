@@ -7,7 +7,7 @@ module.exports = {
   sections: [
     {
       type: 'image',
-      content: './australian-map.png',
+      content: 'image/australian-map.png',
     },
     {
       type: 'text',

@@ -18,6 +18,7 @@ const corsOptions = {
   origin: '*',
 };
 app.use(cors(corsOptions));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // disable etags to prevent 304 being returned to clients
 app.disable('etag');
