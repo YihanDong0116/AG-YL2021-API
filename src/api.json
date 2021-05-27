@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Algorithms API",
-    "version": "1.0.2"
+    "version": "1.0.3"
   },
   "servers": [
     {
@@ -289,6 +289,13 @@
               "data": {
                 "description": "The data used to display and submit a solution to the problem, dependent on problem type",
                 "type": "object"
+              },
+              "hints": {
+                "description": "Hints for solving the problem",
+                "type": "array", 
+                "items": {
+                  "type": "string"
+                }
               }
             },
             "required": [
