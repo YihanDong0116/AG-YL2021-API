@@ -32,22 +32,22 @@ module.exports = {
   tests: [
     {
       feedback: 'Node 1 is reachable from node 5 via the edges (5,3),(3,4),(4,1) or (5,3),(3,2),(2,1). Node 4 is reachable from node 1 via the edges (1,2),(2,3),(3,4). Node 5 is not reachable from node 4 because there is no edges (3,5).',
-      check: (inputs) => inputs.id === ['1', '3'],
+      check: (inputs) => inputs.ids.toString() === ['1', '3'].toString(),
       status: 'pass',
     },
     {
       feedback: 'You are missing the true option.',
-      check: (inputs) => inputs.id === ['1'],
+      check: (inputs) => inputs.ids.toString() === ['1'].toString(),
       status: 'fail',
     },
     {
       feedback: 'You are missing the true option.',
-      check: (inputs) => inputs.id === ['3'],
+      check: (inputs) => inputs.ids.toString() === ['3'].toString(),
       status: 'fail',
     },
     {
       feedback: 'You have selected a wrong option',
-      check: (inputs) => inputs.id.includes('2'),
+      check: (inputs) => inputs.ids.includes('2'),
       status: 'fail',
     },
   ],

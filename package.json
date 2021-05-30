@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "jest --runInBand --coverage",
-    "start": "node src/bin/server.js",
+    "start": "nodemon src/bin/server.js",
     "lint": "eslint \"src/**/*.js\" \"test/**/*.js\""
   },
   "repository": {

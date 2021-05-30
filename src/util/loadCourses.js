@@ -105,7 +105,15 @@ class CourseLoader {
     });
     return res;
   }
+
+  /* get the tests from a page */
+  getTestsById(id) {
+    const page = this.getPageById(id);
+    return page.tests;
+  }
 }
+
+
 
 const courseloader = new CourseLoader();
 

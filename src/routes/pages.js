@@ -15,7 +15,49 @@ router.get('/:page_id', (req, res) => {
 });
 
 router.post('/:page_id/submit', (req, res) => {
-  res.send('Will be decided after the course structure and problems types are defined');
+  const page_id = req.params.page_id;
+  let status, message, reason;
+  const page = courseloader.getPageById(page_id);
+  // cannot find the page - {} is returned
+  if (page && Object.keys(page).length === 0 && page.constructor === Object) {
+    res.status(404);
+    status = 0;
+    message = "";
+    reason = "Page does not exist.";
+    res.json({status, message, reason})
+  }
+  // learning pages do not accept submissions
+  else if (page.type === "learn") {
+      res.status(403);
+      status = 0;
+      message = "";
+      reason = "Cannot submit to a learning page"
+      res.json({status, message, reason})
+    } else {
+      const type = req.body.type;
+      const data = req.body.data;
+      console.log(page_id);
+      console.log(type);
+      console.log(data);
+      // if the type is multiple choice
+      if (type === "multichoice") {
+        const tests = courseloader.getTestsById(page_id);
+        tests.forEach((test) => {
+          console.log(test)
+          if (test.check(data)) {
+              status = test.status;
+          }
+        });
+        res.json({status, tests})
+      }
+      // type is text
+      else if (type === "text") {
+        // pass
+      }
+      else if (type === "code") {
+        // pass
+      }
+    }
 });
 
 module.exports = router;
