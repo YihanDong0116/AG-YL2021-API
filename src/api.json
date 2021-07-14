@@ -345,7 +345,10 @@
               "fail"
             ]
           },
-          "tests": {
+          "feedback": {
+            "type": "string"
+          },
+          "results": {
             "type": "array",
             "items": {
               "type": "object",
@@ -362,7 +365,7 @@
                   "description": "Then name of the executed test case, not provided for hidden test cases",
                   "type": "string"
                 },
-                "result": {
+                "status": {
                   "description": "The result of executing the submission against this test case",
                   "type": "string",
                   "enum": [
@@ -386,7 +389,7 @@
         },
         "required": [
           "status",
-          "tests"
+          "results"
         ]
       },
       "Id": {

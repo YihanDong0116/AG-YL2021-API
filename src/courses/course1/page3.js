@@ -1,7 +1,4 @@
-const uuid = require('uuid');
-
 module.exports = {
-  id: uuid.v4(),
   title: 'Graphs are Nodes and Edges',
   type: 'learn',
   sections: [

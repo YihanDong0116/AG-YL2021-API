@@ -1,7 +1,19 @@
-const uuid = require('uuid');
+const listsAreSame = (expected, actual) => {
+  if (expected.length !== actual.length) {
+    return false;
+  }
+  const sortedExpected = expected.sort();
+  const sortedActual = actual.sort();
+  for (let i = 0; i < sortedExpected.length; i += 1) {
+    if (sortedExpected[i] !== sortedActual[i]) {
+      return false;
+    }
+  }
+
+  return true;
+};
 
 module.exports = {
-  id: uuid.v4(),
   title: 'How’s Your Reach?',
   type: 'practice',
   problem: {
@@ -11,15 +23,15 @@ module.exports = {
       options: [
         {
           id: '1',
-          content: '1) Node 1 is reachable from node 5',
+          content: 'Node 1 is reachable from node 5',
         },
         {
           id: '2',
-          content: '2) Node 5 is reachable from node 4',
+          content: 'Node 5 is reachable from node 4',
         },
         {
           id: '3',
-          content: '3) Node 4 is reachable from node 1',
+          content: 'Node 4 is reachable from node 1',
         },
       ],
     },
@@ -32,22 +44,22 @@ module.exports = {
   tests: [
     {
       feedback: 'Node 1 is reachable from node 5 via the edges (5,3),(3,4),(4,1) or (5,3),(3,2),(2,1). Node 4 is reachable from node 1 via the edges (1,2),(2,3),(3,4). Node 5 is not reachable from node 4 because there is no edges (3,5).',
-      check: (inputs) => inputs.id === ['1', '3'],
+      check: (inputs) => listsAreSame(['1', '3'], inputs.ids),
       status: 'pass',
     },
     {
       feedback: 'You are missing the true option.',
-      check: (inputs) => inputs.id === ['1'],
+      check: (inputs) => !inputs.ids.includes('1'),
       status: 'fail',
     },
     {
       feedback: 'You are missing the true option.',
-      check: (inputs) => inputs.id === ['3'],
+      check: (inputs) => !inputs.ids.includes('3'),
       status: 'fail',
     },
     {
       feedback: 'You have selected a wrong option',
-      check: (inputs) => inputs.id.includes('2'),
+      check: (inputs) => inputs.ids.includes('2'),
       status: 'fail',
     },
   ],

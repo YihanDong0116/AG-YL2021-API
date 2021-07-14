@@ -1,7 +1,4 @@
-const uuid = require('uuid');
-
 module.exports = {
-  id: uuid.v4(),
   title: 'Recap and a Little Direction',
   type: 'learn',
   sections: [
