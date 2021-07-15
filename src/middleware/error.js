@@ -37,7 +37,7 @@ const handleError = (err, req, res, next) => {
 
   // render the error page
   res.status(status);
-  res.json({
+  return res.json({
     url: req.url,
     status,
     message,
