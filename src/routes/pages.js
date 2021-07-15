@@ -13,13 +13,15 @@ const pageSchema = yup.object().shape({
   sections: yup.array().of(yup.object().shape({
     type: yup.string().oneOf(['text', 'image', 'animation']).required(),
     content: yup.string().required(),
-  })),
-  problem: yup.object().shape({
-    type: yup.string().oneOf(['code', 'multichoice', 'text']).required(),
-    question: yup.string().required(),
-    data: yup.object().required(),
-    hints: yup.array().of(yup.string()),
-  }),
+  })).when('type',
+    (value, schema) => (value === 'practice' ? schema.strip() : schema)),
+  problem: yup.object().when('type',
+    (value, schema) => (value === 'learn' ? schema.strip() : schema.shape({
+      type: yup.string().oneOf(['code', 'multichoice', 'text']).required(),
+      question: yup.string().required(),
+      data: yup.object().required(),
+      hints: yup.array().of(yup.string()),
+    }))),
 });
 
 const submissionSchema = yup.object().shape({
@@ -39,23 +41,31 @@ const resultSchema = yup.object().shape({
 });
 
 /* GET specific page. */
-router.get('/:id', (req, res) => {
-  const page = pageService.getPageById(req.params.id);
-  const cast = pageSchema.cast(page);
-  return res.json(cast);
+router.get('/:id', (req, res, next) => {
+  try {
+    const page = pageService.getPageById(req.params.id);
+    const cast = pageSchema.cast(page, { stripUnknown: true });
+    return res.json(cast);
+  } catch (e) {
+    return next(e);
+  }
 });
 
-router.post('/:id/submit', (req, res) => {
+router.post('/:id/submit', (req, res, next) => {
   try {
-    submissionSchema.validate(req.body);
+    submissionSchema.validateSync(req.body);
   } catch (e) {
-    throw new InvalidFormat(`invalid request body: ${e.message}`);
+    return next(new InvalidFormat(`invalid request body: ${e.message}`));
   }
 
-  const castSubmission = submissionSchema.cast(req.body);
-  const result = pageService.submit(req.params.id, castSubmission);
-  const castResult = resultSchema.cast(result);
-  res.json(castResult);
+  try {
+    const castSubmission = submissionSchema.cast(req.body, { stripUnknown: true });
+    const result = pageService.submit(req.params.id, castSubmission);
+    const castResult = resultSchema.cast(result, { stripUnknown: true });
+    return res.json(castResult);
+  } catch (e) {
+    return next(e);
+  }
 });
 
 module.exports = router;

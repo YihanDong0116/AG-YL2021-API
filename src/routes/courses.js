@@ -32,10 +32,17 @@ router.get('/', (req, res, next) => {
 });
 
 /* GET specific course. */
-router.get('/:id', (req, res) => {
-  const course = courseService.getCourseById(req.params.id);
-  const cast = courseSchema.cast({ ...course, pages: course.getAllPages() });
-  return res.json(cast);
+router.get('/:id', (req, res, next) => {
+  try {
+    const course = courseService.getCourseById(req.params.id);
+    const cast = courseSchema.cast(
+      { ...course, pages: course.getAllPages() },
+      { stripUnknown: true },
+    );
+    return res.json(cast);
+  } catch (e) {
+    return next(e);
+  }
 });
 
 module.exports = router;

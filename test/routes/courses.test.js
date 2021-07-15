@@ -8,7 +8,7 @@ const { PracticePage } = require('../../src/model/practicePage');
 
 jest.mock('../../src/model');
 
-describe('Test courses', () => {
+describe('courses routes tests', () => {
   let courseResponse;
   beforeAll(() => {
     const course = new Course('courseName');
@@ -42,24 +42,35 @@ describe('Test courses', () => {
   });
 
   test('Given valid request when GET /courses then return OK', async () => {
+    // when
     const response = await request(app).get('/courses');
+
+    // then
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual([courseResponse]);
     expect(model.courseService.getAllCourses).toHaveBeenCalled();
   });
 
   test('Given valid request when GET /courses/correct_course_id then return OK', async () => {
+    // when
     const response = await request(app).get(`/courses/${courseResponse.id}`);
+
+    // then
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual(courseResponse);
-    expect(model.courseService.getAllCourses).toHaveBeenCalledWith(courseResponse.id);
+    expect(model.courseService.getCourseById).toHaveBeenCalledWith(courseResponse.id);
   });
 
   test('Given invalid request when GET /courses/incorrect_course_id then return 404', async () => {
+    // given
     model.courseService.getCourseById.mockImplementation(() => {
       throw new NotFound();
     });
+
+    // when
     const response = await request(app).get('/courses/abcde');
+
+    // then
     expect(response.statusCode).toBe(404);
   });
 });
