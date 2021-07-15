@@ -27,7 +27,7 @@ const submissionSchema = yup.object().shape({
   data: yup.object().required(),
 });
 
-const resultSchema = yup.object.shape({
+const resultSchema = yup.object().shape({
   status: yup.string().oneOf(['pass', 'fail']).required(),
   feedback: yup.string(),
   results: yup.array().of(yup.object().shape({

@@ -3,7 +3,11 @@ const { InvalidFormat } = require('../error/invalidFormat');
 const { NotFound } = require('../error/notFound');
 const { NotImplemented } = require('../error/notImplemented');
 
-const handleError = (err, req, res) => {
+const handleError = (err, req, res, next) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+
   // set locals, only providing error in development
   let status = err.status || 500;
   let message = err.message || 'Internal Server Error';

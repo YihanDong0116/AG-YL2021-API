@@ -15,7 +15,7 @@ class CourseService {
   }
 
   getAllCourses() {
-    return this.courses.reduce((acc, r) => acc.push(r), []);
+    return Object.values(this.courses);
   }
 }
 

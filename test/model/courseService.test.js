@@ -1,5 +1,5 @@
 const { CourseService } = require('../../src/model/courseService');
-const { Course } = require('../../src/model/courseService');
+const { Course } = require('../../src/model/course');
 
 describe('CourseService tests', () => {
   test('given course exists when getCourseById then return course', () => {
@@ -16,7 +16,7 @@ describe('CourseService tests', () => {
     expect(retrieved).toBe(course);
   });
 
-  test('given courses exists when getAllCourses then list of courses returned', () => {
+  test('given courses exist when getAllCourses then list of courses returned', () => {
     // given
     const course1 = new Course();
     const course2 = new Course();
@@ -31,9 +31,9 @@ describe('CourseService tests', () => {
     // then
     expect(retrieved).toBeDefined();
     expect(retrieved.length).toBe(2);
-    expect(retrieved).toBeArrayContaining([
+    expect(retrieved).toEqual(expect.arrayContaining([
       course1,
       course2,
-    ]);
+    ]));
   });
 });

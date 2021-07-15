@@ -15,7 +15,7 @@ class PageService {
   }
 
   getAllPages() {
-    return this.pages.reduce((acc, r) => acc.push(r), []);
+    return Object.values(this.pages);
   }
 
   submit(id, input) {

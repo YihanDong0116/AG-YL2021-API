@@ -1,18 +1,16 @@
 const courseFactory = require('../model/courseFactory');
 
-const course1 = require('../courses/course1');
-
-const COURSES = [course1];
+const courses = require('../courses');
 
 class CourseLoader {
   load() {
     this.courses = {};
     this.pages = {};
 
-    COURSES.forEach((c) => {
+    courses().forEach((c) => {
       const course = courseFactory.make(c);
       this.courses[course.id] = course;
-      course.pages.forEach((p) => {
+      course.getAllPages().forEach((p) => {
         this.pages[p.id] = p;
       });
     });

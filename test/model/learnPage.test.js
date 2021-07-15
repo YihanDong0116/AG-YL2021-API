@@ -12,7 +12,7 @@ describe('LearnPage tests', () => {
     expect(page.sections).toBe(sections);
   });
 
-  it('give LearnPage when submit to page then throws', () => {
+  it('given LearnPage when submit to page then throws', () => {
     // given
     const page = new LearnPage('someName', []);
 
