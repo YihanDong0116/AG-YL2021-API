@@ -16,6 +16,16 @@ describe('CourseService tests', () => {
     expect(retrieved).toBe(course);
   });
 
+  test('given course does not exist when getCourseById then throws', () => {
+    // given
+    const course = new Course();
+    const courses = {};
+    const service = new CourseService(courses);
+
+    // when then
+    expect(() => service.getCourseById(course.id)).toThrow();
+  });
+
   test('given courses exist when getAllCourses then list of courses returned', () => {
     // given
     const course1 = new Course();

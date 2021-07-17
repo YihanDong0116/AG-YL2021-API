@@ -13,8 +13,9 @@ class PracticePage extends Page {
   }
 
   submit(inputs) {
-    const results = this.tests.map((t) => (
-      { ...t, status: t.check(inputs) ? TEST_PASS : TEST_FAIL }));
+    const results = this.tests.map(
+      (t) => ({ ...t, status: t.check(inputs.data) ? TEST_PASS : TEST_FAIL }),
+    );
     const firstFailed = results.find((r) => r.status === TEST_FAIL);
     let status;
     let feedback;
