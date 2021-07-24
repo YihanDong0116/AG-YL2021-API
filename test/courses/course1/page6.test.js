@@ -6,10 +6,6 @@ describe('Page6 test', () => {
     // given
     const page = pageFactory.make(pageData);
 
-    const res = pageData.tests[0].check({
-      ids: ['1', '3'],
-    });
-
     // when
     const result = page.submit({
       type: 'text',
