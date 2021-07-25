@@ -1,6 +1,7 @@
 const addEdgeEvent = require('./addEdgeEvent');
 const addNodeEvent = require('./addNodeEvent');
-
+const removeEdgeEvent = require('./removeEdgeEvent');
+const removeNodeEvent = require('./removeNodeEvent');
 const visitNodeEvent = require('./visitNodeEvent');
 const traverseEdgeEvent = require('./traverseEdgeEvent');
 
@@ -15,6 +16,10 @@ const make = (event) => {
       return new visitNodeEvent.VisitNodeEvent(event.data, time);
     case traverseEdgeEvent.TYPE:
       return new traverseEdgeEvent.TraverseEdgeEvent(event.data, time);
+    case removeEdgeEvent.TYPE:
+      return new removeEdgeEvent.RemoveEdgeEvent(event.data, time);
+    case removeNodeEvent.TYPE:
+      return new removeNodeEvent.RemoveNodeEvent(event.data, time);
     default:
       throw new Error(`unknown event type ${event.type}`);
   }

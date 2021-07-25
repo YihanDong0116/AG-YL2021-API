@@ -15,6 +15,10 @@ class Node {
     this.edges.push(edge);
   }
 
+  removeEdge(edgeId) {
+    this.edges = this.edges.filter((e) => e.id !== edgeId);
+  }
+
   getPathsFrom() {
     return this.edges.filter((e) => e.fromNode.id === this.id);
   }

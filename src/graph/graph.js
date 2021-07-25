@@ -59,6 +59,24 @@ class Graph {
     }, this);
   }
 
+  removeNode(nodeId) {
+    makeAndApplyEvent({
+      type: 'removeNode',
+      data: {
+        nodeId,
+      },
+    }, this);
+  }
+
+  removeEdge(edgeId) {
+    makeAndApplyEvent({
+      type: 'removeEdge',
+      data: {
+        edgeId,
+      },
+    }, this);
+  }
+
   visitNode(nodeId) {
     const event = eventFactory.make({
       type: 'visitNode',
@@ -80,9 +98,14 @@ class Graph {
   }
 
   getEdgeById(edgeId) {
-    const edge = this.edges.find((n) => n.id === edgeId);
+    const edge = this.edges.find((e) => e.id === edgeId);
     if (!edge) throw new Error(`edge with id ${edgeId} not found`);
     return edge;
+  }
+
+  hasEdge(fromNodeId, toNodeId) {
+    return this.edges
+      .filter((e) => e.fromNode.id === fromNodeId && e.toNode.id === toNodeId).length > 0;
   }
 
   getNodeById(nodeId) {

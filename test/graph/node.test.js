@@ -63,4 +63,20 @@ describe('Node tests', () => {
     expect(paths.length).toBe(1);
     expect(paths.includes(edge)).toBe(true);
   });
+
+  test('given node has edge when removeEdge then edge removed', () => {
+    // given
+    const graph = new Graph();
+    const node = new Node('name', 1, 2, graph);
+    const edge = new Edge(new Node(), node);
+    const otherEdge = new Edge(node, new Node());
+    node.edges = [edge, otherEdge];
+
+    // when
+    node.removeEdge(edge.id);
+
+    // then
+    expect(node.edges.length).toBe(1);
+    expect(node.edges[0]).toBe(otherEdge);
+  });
 });

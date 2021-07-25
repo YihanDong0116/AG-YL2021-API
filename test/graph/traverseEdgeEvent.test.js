@@ -1,7 +1,6 @@
 const Edge = require('../../src/graph/edge');
 const Graph = require('../../src/graph/graph');
 const { TraverseEdgeEvent } = require('../../src/graph/traverseEdgeEvent');
-const { VisitNodeEvent } = require('../../src/graph/visitNodeEvent');
 
 describe('TraverseEdgeEvent tests', () => {
   test('given traverse edge event when apply then applies unit of work', () => {
@@ -31,7 +30,7 @@ describe('TraverseEdgeEvent tests', () => {
     const edge = new Edge();
     graph.edges.push(edge);
 
-    const traverseEdgeEvent = new VisitNodeEvent({
+    const traverseEdgeEvent = new TraverseEdgeEvent({
       edgeId: 'someOtherId',
     });
 

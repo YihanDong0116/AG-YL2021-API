@@ -6,19 +6,21 @@ const Node = require('../../src/graph/node');
 describe('AddEdgeEvent tests', () => {
   test('given add edge event and nodes in graph when apply then applies unit of work', () => {
     // given
+    const graph = new Graph();
+    const fromNode = new Node();
+    const toNode = new Node();
+    graph.nodes = [
+      fromNode, toNode,
+    ];
+
     const addEdgeEvent = new AddEdgeEvent({
       name: 'someEdgeName',
       weight: 1,
-      fromNodeId: 'fromNodeId',
-      toNodeId: 'toNodeId',
+      fromNodeId: fromNode.id,
+      toNodeId: toNode.id,
     });
 
-    const graph = new Graph();
-    const graphSpy = jest.spyOn(graph, 'getNodeById').mockImplementation((id) => {
-      const node = new Node();
-      node.id = id;
-      return node;
-    });
+    const graphSpy = jest.spyOn(graph, 'getNodeById');
 
     // when
     addEdgeEvent.apply(graph);
@@ -31,11 +33,39 @@ describe('AddEdgeEvent tests', () => {
     expect(newEdge.name).toBe('someEdgeName');
     expect(newEdge.weight).toBe(1);
     expect(newEdge.fromNode).toBeDefined();
-    expect(newEdge.fromNode.id).toBe('fromNodeId');
+    expect(newEdge.fromNode).toBe(fromNode);
     expect(newEdge.toNode).toBeDefined();
-    expect(newEdge.toNode.id).toBe('toNodeId');
-    expect(graphSpy).toHaveBeenCalledWith('fromNodeId');
-    expect(graphSpy).toHaveBeenCalledWith('toNodeId');
+    expect(newEdge.toNode).toBe(toNode);
+    expect(fromNode.edges).toBeDefined();
+    expect(fromNode.edges.length).toBe(1);
+    expect(fromNode.edges[0]).toBe(newEdge);
+    expect(toNode.edges).toBeDefined();
+    expect(toNode.edges.length).toBe(1);
+    expect(toNode.edges[0]).toBe(newEdge);
+    expect(graphSpy).toHaveBeenCalledWith(fromNode.id);
+    expect(graphSpy).toHaveBeenCalledWith(toNode.id);
+  });
+
+  test('given add edge event and edge already exists then throws', () => {
+    // given
+    const graph = new Graph();
+    const fromNode = new Node();
+    const toNode = new Node();
+    graph.nodes = [
+      fromNode, toNode,
+    ];
+    const edge = new Edge(fromNode, toNode);
+    graph.edges = [edge];
+
+    const addEdgeEvent = new AddEdgeEvent({
+      name: 'someEdgeName',
+      weight: 1,
+      fromNodeId: fromNode.id,
+      toNodeId: toNode.id,
+    });
+
+    // when then
+    expect(() => addEdgeEvent.apply(graph)).toThrow();
   });
 
   test('given add edge event and fromNode not in graph when apply then throws', () => {

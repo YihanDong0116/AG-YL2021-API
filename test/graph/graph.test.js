@@ -54,7 +54,7 @@ describe('Graph tests', () => {
     expect(applySpy).toHaveBeenCalledWith(graph);
   });
 
-  test('give graph with subscriptions when apply event then subscribers notified', () => {
+  test('given graph with subscriptions when apply event then subscribers notified', () => {
     // given
     const graph = new Graph();
     const handler = jest.fn(() => {});
@@ -184,6 +184,69 @@ describe('Graph tests', () => {
     });
   });
 
+  test('given graph with edge when removed then event created and applied to graph', () => {
+    // given
+    const event = new Event();
+    const eventSpy = jest.spyOn(event, 'apply').mockImplementation(() => {}); // do nothing
+    const eventFactorySpy = jest.spyOn(eventFactory, 'make').mockReturnValue(event);
+    const graph = new Graph();
+    const edgeId = 'someEdgeId';
+
+    // when
+    graph.removeEdge(edgeId);
+
+    // then
+    expect(eventSpy).toHaveBeenCalledWith(graph);
+    expect(eventFactorySpy).toHaveBeenCalledWith({
+      type: 'removeEdge',
+      data: {
+        edgeId,
+      },
+    });
+  });
+
+  test('given graph with node when removed then event created and applied to graph', () => {
+    // given
+    const event = new Event();
+    const eventSpy = jest.spyOn(event, 'apply').mockImplementation(() => {}); // do nothing
+    const eventFactorySpy = jest.spyOn(eventFactory, 'make').mockReturnValue(event);
+    const graph = new Graph();
+    const nodeId = 'someNodeId';
+
+    // when
+    graph.removeNode(nodeId);
+
+    // then
+    expect(eventSpy).toHaveBeenCalledWith(graph);
+    expect(eventFactorySpy).toHaveBeenCalledWith({
+      type: 'removeNode',
+      data: {
+        nodeId,
+      },
+    });
+  });
+
+  test('given graph with node when visited then event created and applied to graph', () => {
+    // given
+    const event = new Event();
+    const eventSpy = jest.spyOn(event, 'apply').mockImplementation(() => {}); // do nothing
+    const eventFactorySpy = jest.spyOn(eventFactory, 'make').mockReturnValue(event);
+    const graph = new Graph();
+    const nodeId = 'someNodeId';
+
+    // when
+    graph.visitNode(nodeId);
+
+    // then
+    expect(eventSpy).toHaveBeenCalledWith(graph);
+    expect(eventFactorySpy).toHaveBeenCalledWith({
+      type: 'visitNode',
+      data: {
+        nodeId,
+      },
+    });
+  });
+
   test('given graph has node when getNodeById then node returned', () => {
     // given
     const graph = new Graph();
@@ -228,5 +291,33 @@ describe('Graph tests', () => {
 
     // when then
     expect(() => graph.getEdgeById('someOtheredge')).toThrow();
+  });
+
+  test('given graph has nodes that share edge then hasEdge returns true', () => {
+    const graph = new Graph();
+    const fromNode = new Node();
+    const toNode = new Node();
+    const edge = new Edge(fromNode, toNode);
+    graph.edges.push(edge);
+
+    // when
+    const hasNode = graph.hasEdge(fromNode.id, toNode.id);
+
+    // then
+    expect(hasNode).toBe(true);
+  });
+
+  test('given graph has no nodes that share edge then hasEdge returns true', () => {
+    const graph = new Graph();
+    const fromNode = new Node();
+    const toNode = new Node();
+    const edge = new Edge(fromNode, toNode);
+    graph.edges.push(edge);
+
+    // when
+    const hasNode = graph.hasEdge(toNode.id, fromNode.id);
+
+    // then
+    expect(hasNode).toBe(false);
   });
 });
