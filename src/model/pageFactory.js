@@ -59,7 +59,7 @@ const practicePageSchema = yup.object().shape({
   problem: yup.object().shape({
     type: yup.string().required(),
     question: yup.string().required(),
-    data: yup.mixed().defined(),
+    data: yup.object().required(),
     hints: yup.array().of(yup.string()).required(),
     sections: yup.array().of(yup.object().shape({
       type: yup.string().required(),
@@ -113,7 +113,7 @@ const getProblemData = (problem) => {
       throw new Error(`unknown problem type ${problem.type}`);
   }
   schema.validateSync(problem.data);
-  schema.cast(problem.data, { stripUnknown: true });
+  return schema.cast(problem.data, { stripUnknown: true });
 };
 
 const getLearnPage = (data) => {

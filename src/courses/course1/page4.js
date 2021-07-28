@@ -5,6 +5,8 @@ module.exports = {
     {
       type: 'graph',
       content: {
+        width: 400,
+        height: 400,
         nodes: [
           {
             id: 'a',

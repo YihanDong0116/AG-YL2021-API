@@ -10,8 +10,9 @@ module.exports = {
     question: 'Create a graph with nodes [a, b, c, d] and edges [(a, b), (b, a), (b, c), (c, d)]',
     data: {},
     hints: [
-      'the nodes on this graph should have the labels [a, b, c, d] and recall that the edge (a, b) is a path from node a to node b',
+      'The nodes on this graph should have the labels [a, b, c, d] and recall that the edge (a, b) is a path from node a to node b',
     ],
+    sections: [],
   },
   tests: [
     {
