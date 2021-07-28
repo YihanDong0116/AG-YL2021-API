@@ -12,7 +12,7 @@ const pageSchema = yup.object().shape({
   type: yup.string().oneOf(['learn', 'practice']).required(),
   sections: yup.array().of(yup.object().shape({
     type: yup.string().required(),
-    content: yup.string().required(),
+    content: yup.mixed().required(),
   })).when('type',
     (value, schema) => (value === 'practice' ? schema.strip() : schema)),
   problem: yup.object().when('type',
@@ -21,6 +21,10 @@ const pageSchema = yup.object().shape({
       question: yup.string().required(),
       data: yup.mixed().defined(),
       hints: yup.array().of(yup.string()),
+      sections: yup.array().of(yup.object().shape({
+        type: yup.string().required(),
+        content: yup.mixed().required(),
+      })),
     }))),
 });
 
