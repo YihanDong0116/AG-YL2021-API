@@ -8,7 +8,7 @@ module.exports = {
     },
     {
       type: 'graphCreator',
-      content: 'This is a graph creator, you can use this to create any graph that you like! Try creating one now, if you\'re stuck have read the instructions below to learn about the graph creator controls.',
+      content: 'This is a graph creator, you can use this to create any graph that you like! Try creating one now, if you\'re stuck read the instructions below to learn about the graph creator controls.',
     },
   ],
 };

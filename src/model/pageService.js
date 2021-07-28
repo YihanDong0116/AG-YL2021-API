@@ -1,4 +1,4 @@
-const NotFound = require('../error/notFound');
+const { NotFound } = require('../error/notFound');
 
 const PAGE_TYPE = 'page';
 

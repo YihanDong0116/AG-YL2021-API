@@ -15,11 +15,34 @@ describe('pageFactory tests', () => {
         },
         {
           type: 'image',
-          content: 'http://some.url',
+          content: '/an/ok/url',
         },
         {
-          type: 'animation',
+          type: 'graphCreator',
           content: 'someText',
+        },
+        {
+          type: 'graph',
+          content: {
+            width: 1,
+            height: 1,
+            nodes: [
+              {
+                id: 'someId',
+                name: 'someName',
+                x: 1,
+                y: 1,
+              },
+            ],
+            edges: [
+              {
+                id: 'someEdgeId',
+                name: 'someEdgeName',
+                fromNodeId: '1',
+                toNodeId: '1',
+              },
+            ],
+          },
         },
       ],
     };
@@ -120,8 +143,18 @@ describe('pageFactory tests', () => {
       title: 'someTitle',
       type: 'practice',
       problem: {
+        question: 'question',
         type: 'multichoice',
-        data: {},
+        data: {
+          someData: 'someData',
+        },
+        sections: [
+          {
+            type: 'image',
+            content: '/an/ok/url',
+          },
+        ],
+        hints: ['string'],
       },
       tests: [
         {
@@ -165,8 +198,18 @@ describe('pageFactory tests', () => {
       title: 'someTitle',
       type: 'practice',
       problem: {
+        question: 'question',
         type: 'multichoice',
-        data: {},
+        data: {
+          someData: 'someData',
+        },
+        sections: [
+          {
+            type: 'image',
+            content: '/an/ok/url',
+          },
+        ],
+        hints: ['string'],
       },
     };
 
@@ -180,7 +223,17 @@ describe('pageFactory tests', () => {
       title: 'someTitle',
       type: 'practice',
       problem: {
-        data: {},
+        question: 'question',
+        data: {
+          someData: 'someData',
+        },
+        sections: [
+          {
+            type: 'image',
+            content: '/an/ok/url',
+          },
+        ],
+        hints: ['string'],
       },
       tests: [
         {
@@ -200,7 +253,15 @@ describe('pageFactory tests', () => {
       title: 'someTitle',
       type: 'practice',
       problem: {
+        question: 'question',
         type: 'multichoice',
+        sections: [
+          {
+            type: 'image',
+            content: '/an/ok/url',
+          },
+        ],
+        hints: ['string'],
       },
       tests: [
         {
@@ -220,8 +281,18 @@ describe('pageFactory tests', () => {
       title: 'someTitle',
       type: 'practice',
       problem: {
+        question: 'question',
         type: 'multichoice',
-        data: {},
+        data: {
+          someData: 'someData',
+        },
+        sections: [
+          {
+            type: 'image',
+            content: '/an/ok/url',
+          },
+        ],
+        hints: ['string'],
       },
       tests: [
         {
@@ -240,8 +311,18 @@ describe('pageFactory tests', () => {
       title: 'someTitle',
       type: 'practice',
       problem: {
+        question: 'question',
         type: 'multichoice',
-        data: {},
+        data: {
+          someData: 'someData',
+        },
+        sections: [
+          {
+            type: 'image',
+            content: '/an/ok/url',
+          },
+        ],
+        hints: ['string'],
       },
       tests: [
         {

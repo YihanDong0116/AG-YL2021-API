@@ -10,9 +10,44 @@ const pageSchema = yup.object().shape({
 
 const learnPageSchema = yup.object().shape({
   sections: yup.array().of(yup.object().shape({
-    type: yup.string().oneOf(['text', 'image', 'animation', 'graphCreator']).required(),
-    content: yup.string().required(),
+    type: yup.string().required(),
+    content: yup.mixed(),
   })).required(),
+});
+
+const textSectionSchema = yup.object().shape({
+  type: yup.string().required(),
+  content: yup.string().required(),
+});
+
+const graphCreatorSectionSchema = yup.object().shape({
+  type: yup.string().required(),
+  content: yup.string(),
+});
+
+const imageSectionSchema = yup.object().shape({
+  type: yup.string().required(),
+  content: yup.string().required(),
+});
+
+const graphSectionSchema = yup.object().shape({
+  type: yup.string().required(),
+  content: yup.object().shape({
+    height: yup.number().integer().required(),
+    width: yup.number().integer().required(),
+    nodes: yup.array().of(yup.object().shape({
+      id: yup.string().required(),
+      name: yup.string().required(),
+      x: yup.number().integer().required(),
+      y: yup.number().integer().required(),
+    })).required(),
+    edges: yup.array().of(yup.object().shape({
+      id: yup.string().required(),
+      name: yup.string().required(),
+      fromNodeId: yup.string().required(),
+      toNodeId: yup.string().required(),
+    })).required(),
+  }).required(),
 });
 
 const practicePageSchema = yup.object().shape({
@@ -22,20 +57,77 @@ const practicePageSchema = yup.object().shape({
     check: yup.mixed().test('is-function', '${path} must be a function', (value) => typeof value === 'function'),
   })).required(),
   problem: yup.object().shape({
-    type: yup.string().oneOf(['multichoice', 'code', 'eventStream', 'graphCreator']).required(),
-    data: yup.object().required(),
+    type: yup.string().required(),
+    question: yup.string().required(),
+    data: yup.mixed().defined(),
+    hints: yup.array().of(yup.string()).required(),
+    sections: yup.array().of(yup.object().shape({
+      type: yup.string().required(),
+      content: yup.mixed(),
+    })).required(),
   }).required(),
 });
+
+const multichoiceProblemDataSchema = yup.object().shape({
+  options: yup.array().of(yup.object().shape({
+    id: yup.string().required(),
+    content: yup.string().required(),
+  })),
+});
+
+const graphCreatorProblemDataSchema = yup.object().shape({});
+
+const getSection = (section) => {
+  let schema;
+  switch (section.type) {
+    case 'text':
+      schema = textSectionSchema;
+      break;
+    case 'image':
+      schema = imageSectionSchema;
+      break;
+    case 'graph':
+      schema = graphSectionSchema;
+      break;
+    case 'graphCreator':
+      schema = graphCreatorSectionSchema;
+      break;
+    default:
+      throw new Error(`unknown section type ${section.type}`);
+  }
+
+  schema.validateSync(section);
+  return schema.cast(section, { stripUnknown: true });
+};
+
+const getProblemData = (problem) => {
+  let schema;
+  switch (problem.type) {
+    case 'multichoice':
+      schema = multichoiceProblemDataSchema;
+      break;
+    case 'graphCreator':
+      schema = graphCreatorProblemDataSchema;
+      break;
+    default:
+      throw new Error(`unknown problem type ${problem.type}`);
+  }
+  schema.validateSync(problem.data);
+  schema.cast(problem.data, { stripUnknown: true });
+};
 
 const getLearnPage = (data) => {
   learnPageSchema.validateSync(data);
   const cast = learnPageSchema.cast(data);
-  return new LearnPage(cast.title, cast.sections);
+  const sections = cast.sections.map((s) => getSection(s));
+  return new LearnPage(cast.title, sections);
 };
 
 const getPracticePage = (data) => {
   practicePageSchema.validateSync(data);
   const cast = practicePageSchema.cast(data);
+  cast.problem.sections = cast.problem.sections.map((s) => getSection(s));
+  cast.problem.data = getProblemData(cast.problem);
   return new PracticePage(cast.title, cast.problem, cast.tests);
 };
 

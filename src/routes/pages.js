@@ -19,14 +19,14 @@ const pageSchema = yup.object().shape({
     (value, schema) => (value === 'learn' ? schema.strip() : schema.shape({
       type: yup.string().required(),
       question: yup.string().required(),
-      data: yup.object().required(),
+      data: yup.mixed().defined(),
       hints: yup.array().of(yup.string()),
     }))),
 });
 
 const submissionSchema = yup.object().shape({
-  type: yup.string().oneOf(['code', 'text', 'eventStream']).required(),
-  data: yup.object().required(),
+  type: yup.string().required(),
+  data: yup.mixed().defined(),
 });
 
 const resultSchema = yup.object().shape({

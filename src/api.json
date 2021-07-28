@@ -279,7 +279,8 @@
                 "enum": [
                   "code",
                   "text",
-                  "multichoice"
+                  "multichoice",
+                  "graphCreator"
                 ]
               },
               "question": {
@@ -295,6 +296,13 @@
                 "type": "array", 
                 "items": {
                   "type": "string"
+                }
+              },
+              "sections": {
+                "description": "The sections of the problem, which may provide additional information not in the question itself",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Section"
                 }
               }
             },

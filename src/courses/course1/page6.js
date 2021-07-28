@@ -39,7 +39,12 @@ module.exports = {
       'The edge with arrow means this edge has the direction. Only the end of the arrow is reachable from the beginning of the arrow, but the beginning of the arrow is not reachable from the end of the arrow.',
       'The edge with arrow means this edge does not have the direction. The other side of the arrow is reachable from both ends of the arrow.',
     ],
-    image: 'image/direct-graph.png',
+    sections: [
+      {
+        type: 'image',
+        content: 'image/direct-graph.png',
+      },
+    ],
   },
   tests: [
     {

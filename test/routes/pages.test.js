@@ -100,7 +100,9 @@ describe('pages route tests', () => {
     // when
     const req = {
       type: 'text',
-      data: {},
+      data: {
+        someData: 'someData',
+      },
     };
     const response = await request(app).post(`/pages/${page.id}/submit`).send(req);
 
@@ -137,7 +139,9 @@ describe('pages route tests', () => {
     // when
     const req = {
       type: 'text',
-      data: {},
+      data: {
+        someData: 'someData',
+      },
     };
     const response = await request(app).post(`/pages/${page.id}/submit`).send(req);
 

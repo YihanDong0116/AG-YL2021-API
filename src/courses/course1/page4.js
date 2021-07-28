@@ -3,8 +3,73 @@ module.exports = {
   type: 'learn',
   sections: [
     {
-      type: 'image',
-      content: 'image/undirect-graph.png',
+      type: 'graph',
+      content: {
+        nodes: [
+          {
+            id: 'a',
+            name: 'a',
+            x: 200,
+            y: 200,
+          },
+          {
+            id: 'b',
+            name: 'b',
+            x: 200,
+            y: 100,
+          },
+          {
+            id: 'c',
+            name: 'c',
+            x: 200,
+            y: 300,
+          },
+          {
+            id: 'd',
+            name: 'd',
+            x: 100,
+            y: 200,
+          },
+          {
+            id: 'e',
+            name: 'e',
+            x: 300,
+            y: 200,
+          },
+        ],
+        edges: [
+          {
+            id: '1',
+            name: '(a, b)',
+            fromNodeId: 'a',
+            toNodeId: 'b',
+          },
+          {
+            id: '2',
+            name: '(a, c)',
+            fromNodeId: 'a',
+            toNodeId: 'c',
+          },
+          {
+            id: '3',
+            name: '(a, d)',
+            fromNodeId: 'a',
+            toNodeId: 'd',
+          },
+          {
+            id: '4',
+            name: '(a, e)',
+            fromNodeId: 'a',
+            toNodeId: 'e',
+          },
+          {
+            id: '5',
+            name: '(a, e)',
+            fromNodeId: 'e',
+            toNodeId: 'a',
+          },
+        ],
+      },
     },
     {
       type: 'text',

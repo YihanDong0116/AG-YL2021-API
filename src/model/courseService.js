@@ -1,4 +1,4 @@
-const NotFound = require('../error/notFound');
+const { NotFound } = require('../error/notFound');
 
 const COURSE_TYPE = 'page';
 
