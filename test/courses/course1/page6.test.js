@@ -1,7 +1,7 @@
 const pageData = require('../../../src/courses/course1/page6');
 const pageFactory = require('../../../src/model/pageFactory');
 
-describe('Page6 test', () => {
+describe('Page6 tests', () => {
   test('when correct answer when check then returns pass status result', () => {
     // given
     const page = pageFactory.make(pageData);

@@ -11,13 +11,13 @@ const pageSchema = yup.object().shape({
   title: yup.string().required(),
   type: yup.string().oneOf(['learn', 'practice']).required(),
   sections: yup.array().of(yup.object().shape({
-    type: yup.string().oneOf(['text', 'image', 'animation']).required(),
+    type: yup.string().required(),
     content: yup.string().required(),
   })).when('type',
     (value, schema) => (value === 'practice' ? schema.strip() : schema)),
   problem: yup.object().when('type',
     (value, schema) => (value === 'learn' ? schema.strip() : schema.shape({
-      type: yup.string().oneOf(['code', 'multichoice', 'text']).required(),
+      type: yup.string().required(),
       question: yup.string().required(),
       data: yup.object().required(),
       hints: yup.array().of(yup.string()),

@@ -10,7 +10,7 @@ const pageSchema = yup.object().shape({
 
 const learnPageSchema = yup.object().shape({
   sections: yup.array().of(yup.object().shape({
-    type: yup.string().oneOf(['text', 'image', 'animation']).required(),
+    type: yup.string().oneOf(['text', 'image', 'animation', 'graphCreator']).required(),
     content: yup.string().required(),
   })).required(),
 });
@@ -22,7 +22,7 @@ const practicePageSchema = yup.object().shape({
     check: yup.mixed().test('is-function', '${path} must be a function', (value) => typeof value === 'function'),
   })).required(),
   problem: yup.object().shape({
-    type: yup.string().oneOf(['multichoice', 'code', 'eventStream']).required(),
+    type: yup.string().oneOf(['multichoice', 'code', 'eventStream', 'graphCreator']).required(),
     data: yup.object().required(),
   }).required(),
 });
