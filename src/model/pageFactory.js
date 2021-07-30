@@ -43,9 +43,35 @@ const graphSectionSchema = yup.object().shape({
     })).required(),
     edges: yup.array().of(yup.object().shape({
       id: yup.string().required(),
-      name: yup.string().required(),
+      name: yup.string(),
       fromNodeId: yup.string().required(),
       toNodeId: yup.string().required(),
+    })).required(),
+  }).required(),
+});
+
+const graphAnimationSectionSchema = yup.object().shape({
+  type: yup.string().required(),
+  content: yup.object().shape({
+    initialGraph: yup.object().shape({
+      height: yup.number().integer().required(),
+      width: yup.number().integer().required(),
+      nodes: yup.array().of(yup.object().shape({
+        id: yup.string().required(),
+        name: yup.string().required(),
+        x: yup.number().integer().required(),
+        y: yup.number().integer().required(),
+      })).required(),
+      edges: yup.array().of(yup.object().shape({
+        id: yup.string().required(),
+        name: yup.string(),
+        fromNodeId: yup.string().required(),
+        toNodeId: yup.string().required(),
+      })).required(),
+    }),
+    events: yup.array().of(yup.object().shape({
+      type: yup.string().required(),
+      data: yup.mixed().defined(),
     })).required(),
   }).required(),
 });
@@ -77,6 +103,23 @@ const multichoiceProblemDataSchema = yup.object().shape({
 
 const graphCreatorProblemDataSchema = yup.object().shape({});
 
+const graphSelectorProblemDataSchema = yup.object().shape({
+  height: yup.number().integer().required(),
+  width: yup.number().integer().required(),
+  nodes: yup.array().of(yup.object().shape({
+    id: yup.string().required(),
+    name: yup.string().required(),
+    x: yup.number().integer().required(),
+    y: yup.number().integer().required(),
+  })).required(),
+  edges: yup.array().of(yup.object().shape({
+    id: yup.string().required(),
+    name: yup.string(),
+    fromNodeId: yup.string().required(),
+    toNodeId: yup.string().required(),
+  })).required(),
+});
+
 const getSection = (section) => {
   let schema;
   switch (section.type) {
@@ -91,6 +134,9 @@ const getSection = (section) => {
       break;
     case 'graphCreator':
       schema = graphCreatorSectionSchema;
+      break;
+    case 'graphAnimation':
+      schema = graphAnimationSectionSchema;
       break;
     default:
       throw new Error(`unknown section type ${section.type}`);
@@ -108,6 +154,9 @@ const getProblemData = (problem) => {
       break;
     case 'graphCreator':
       schema = graphCreatorProblemDataSchema;
+      break;
+    case 'graphSelector':
+      schema = graphSelectorProblemDataSchema;
       break;
     default:
       throw new Error(`unknown problem type ${problem.type}`);

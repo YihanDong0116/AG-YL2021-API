@@ -6,8 +6,21 @@ const page5 = require('./page5');
 const page6 = require('./page6');
 const page7Intro = require('./page7intro');
 const page7 = require('./page7');
+const graphSelectionProblem = require('./graphSelectionProblem');
+const reachabilityPage = require('./rechabilityAnimation');
 
 module.exports = {
   name: 'Dijkstra’s Algorithm',
-  pages: [page1, page2, page3, page4, page5, page6, page7Intro, page7],
+  pages: [
+    page1,
+    page2,
+    page3,
+    graphSelectionProblem,
+    page4,
+    reachabilityPage,
+    page5,
+    page6,
+    page7Intro,
+    page7,
+  ],
 };
