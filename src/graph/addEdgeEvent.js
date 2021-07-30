@@ -17,8 +17,8 @@ class AddEdgeEvent extends Event {
     }
 
     const edge = new Edge(fromNode, toNode, this.data.weight, this.data.name, graph);
-    fromNode.edges.push(edge);
-    toNode.edges.push(edge);
+    fromNode.addEdge(edge);
+    toNode.addEdge(edge);
     graph.edges.push(edge);
   }
 }
