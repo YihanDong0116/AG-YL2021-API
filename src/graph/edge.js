@@ -9,6 +9,20 @@ class Edge {
     this.weight = weight;
     this.name = name;
     this.id = uuid.v4();
+    this.focused = false;
+  }
+
+  traverse() {
+    this.graph.traverseEdge(this.id);
+  }
+
+  focus() {
+    this.graph.clearFocus();
+    this.focused = true;
+  }
+
+  clearFocus() {
+    this.focused = false;
   }
 
   linksNodes(fromNode, toNode) {

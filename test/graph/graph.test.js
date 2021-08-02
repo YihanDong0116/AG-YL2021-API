@@ -320,4 +320,245 @@ describe('Graph tests', () => {
     // then
     expect(hasNode).toBe(false);
   });
+
+  test('given graph has nodes and edges when clearFocus then clearFocus called on each node and edge', () => {
+    // given
+    const graph = new Graph();
+    const edge = new Edge();
+    const node = new Node();
+
+    graph.edges = [edge];
+    graph.nodes = [node];
+
+    const edgeSpy = jest.spyOn(edge, 'clearFocus').mockImplementation(() => {});
+    const nodeSpy = jest.spyOn(node, 'clearFocus').mockImplementation(() => {});
+
+    // when
+    graph.clearFocus();
+
+    // then
+    expect(edgeSpy).toHaveBeenCalled();
+    expect(nodeSpy).toHaveBeenCalled();
+  });
+
+  test('given nodes and edges are valid when init then graph initialized', () => {
+    // given
+    const nodes = [
+      {
+        id: 'someId',
+        x: 1,
+        y: 2,
+        name: 'someName',
+      },
+      {
+        id: 'someOtherId',
+        x: 3,
+        y: 4,
+        name: 'someOtherName',
+      },
+    ];
+
+    const edges = [
+      {
+        id: 'someEdgeId',
+        fromNodeId: 'someId',
+        toNodeId: 'someOtherId',
+        name: 'someEdgeName',
+        weight: 1,
+      },
+      {
+        id: 'someOtherEdgeId',
+        fromNodeId: 'someOtherId',
+        toNodeId: 'someId',
+        name: 'someOtherEdgeName',
+        weight: 2,
+      },
+    ];
+    const graph = new Graph();
+
+    // when
+    graph.init(nodes, edges);
+
+    // then
+    expect(graph.nodes.length).toBe(2);
+    const nodeFirst = graph.getNodeById('someId');
+    expect(nodeFirst.id).toBe('someId');
+    expect(nodeFirst.x).toBe(1);
+    expect(nodeFirst.y).toBe(2);
+    expect(nodeFirst.name).toBe('someName');
+    expect(nodeFirst.edges.length).toBe(2);
+    const nodeSecond = graph.getNodeById('someOtherId');
+    expect(nodeSecond.id).toBe('someOtherId');
+    expect(nodeSecond.x).toBe(3);
+    expect(nodeSecond.y).toBe(4);
+    expect(nodeSecond.name).toBe('someOtherName');
+    expect(nodeSecond.edges.length).toBe(2);
+    expect(graph.edges.length).toBe(2);
+    const edgeFirst = graph.getEdgeById('someEdgeId');
+    expect(edgeFirst.id).toBe('someEdgeId');
+    expect(edgeFirst.name).toBe('someEdgeName');
+    expect(edgeFirst.weight).toBe(1);
+    expect(edgeFirst.fromNode).toBe(nodeFirst);
+    expect(edgeFirst.toNode).toBe(nodeSecond);
+    const edgeSecond = graph.getEdgeById('someOtherEdgeId');
+    expect(edgeSecond.id).toBe('someOtherEdgeId');
+    expect(edgeSecond.name).toBe('someOtherEdgeName');
+    expect(edgeSecond.weight).toBe(2);
+    expect(edgeSecond.fromNode).toBe(nodeSecond);
+    expect(edgeSecond.toNode).toBe(nodeFirst);
+  });
+
+  test('given node with no id when init then throws', () => {
+    // given
+    const nodes = [
+      {
+        x: 1,
+        y: 2,
+        name: 'someName',
+      },
+      {
+        id: 'someOtherId',
+        x: 3,
+        y: 4,
+        name: 'someOtherName',
+      },
+    ];
+
+    const edges = [
+      {
+        id: 'someEdgeId',
+        fromNodeId: 'someId',
+        toNodeId: 'someOtherId',
+        name: 'someEdgeName',
+        weight: 1,
+      },
+      {
+        id: 'someOtherEdgeId',
+        fromNodeId: 'someOtherId',
+        toNodeId: 'someId',
+        name: 'someOtherEdgeName',
+        weight: 2,
+      },
+    ];
+    const graph = new Graph();
+
+    // when + then
+    expect(() => graph.init(nodes, edges)).toThrow();
+  });
+
+  test('given edge with no id when init then throws', () => {
+    // given
+    const nodes = [
+      {
+        id: 'someId',
+        x: 1,
+        y: 2,
+        name: 'someName',
+      },
+      {
+        id: 'someOtherId',
+        x: 3,
+        y: 4,
+        name: 'someOtherName',
+      },
+    ];
+
+    const edges = [
+      {
+        fromNodeId: 'someId',
+        toNodeId: 'someOtherId',
+        name: 'someEdgeName',
+        weight: 1,
+      },
+      {
+        id: 'someOtherEdgeId',
+        fromNodeId: 'someOtherId',
+        toNodeId: 'someId',
+        name: 'someOtherEdgeName',
+        weight: 2,
+      },
+    ];
+    const graph = new Graph();
+
+    // when + then
+    expect(() => graph.init(nodes, edges)).toThrow();
+  });
+
+  test('given edge with bad fromNodId when init then throws', () => {
+    // given
+    const nodes = [
+      {
+        id: 'someId',
+        x: 1,
+        y: 2,
+        name: 'someName',
+      },
+      {
+        id: 'someOtherId',
+        x: 3,
+        y: 4,
+        name: 'someOtherName',
+      },
+    ];
+
+    const edges = [
+      {
+        id: 'someEdgeId',
+        fromNodeId: 'someBadId',
+        toNodeId: 'someOtherId',
+        name: 'someEdgeName',
+        weight: 1,
+      },
+      {
+        id: 'someOtherEdgeId',
+        fromNodeId: 'someOtherId',
+        toNodeId: 'someId',
+        name: 'someOtherEdgeName',
+        weight: 2,
+      },
+    ];
+    const graph = new Graph();
+
+    // when + then
+    expect(() => graph.init(nodes, edges)).toThrow();
+  });
+
+  test('given edge with bad toNodId when init then throws', () => {
+    // given
+    const nodes = [
+      {
+        id: 'someId',
+        x: 1,
+        y: 2,
+        name: 'someName',
+      },
+      {
+        id: 'someOtherId',
+        x: 3,
+        y: 4,
+        name: 'someOtherName',
+      },
+    ];
+
+    const edges = [
+      {
+        id: 'someEdgeId',
+        fromNodeId: 'someId',
+        toNodeId: 'someBadOtherId',
+        name: 'someEdgeName',
+        weight: 1,
+      },
+      {
+        id: 'someOtherEdgeId',
+        fromNodeId: 'someOtherId',
+        toNodeId: 'someId',
+        name: 'someOtherEdgeName',
+        weight: 2,
+      },
+    ];
+    const graph = new Graph();
+
+    // when + then
+    expect(() => graph.init(nodes, edges)).toThrow();
+  });
 });

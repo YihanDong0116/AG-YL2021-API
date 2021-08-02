@@ -65,4 +65,44 @@ describe('Edge tests', () => {
     // then
     expect(links).toBe(false);
   });
+
+  test('given edge when traverse edge then calls graph', () => {
+    // given
+    const graph = new Graph();
+    const graphSpy = jest.spyOn(graph, 'traverseEdge').mockImplementation(() => {});
+    const edge = new Edge(null, null, 1, 'someName', graph);
+
+    // when
+    edge.traverse();
+
+    // then
+    expect(graphSpy).toHaveBeenCalledWith(edge.id);
+  });
+
+  test('given edge focused when clearFocus then edge focus reset', () => {
+    // given
+    const edge = new Edge(null, null, 1, 'someName', null);
+    edge.focused = true;
+
+    // when
+    edge.clearFocus();
+
+    // then
+    expect(edge.focused).toBe(false);
+  });
+
+  test('given edge not focused when focus then focus cleared from graph amd edge focus set', () => {
+    // given
+    const graph = new Graph();
+    const graphSpy = jest.spyOn(graph, 'clearFocus').mockImplementation(() => {});
+    const edge = new Edge(null, null, 1, 'someName', graph);
+    edge.focused = false;
+
+    // when
+    edge.focus();
+
+    // then
+    expect(graphSpy).toHaveBeenCalled();
+    expect(edge.focused).toBe(true);
+  });
 });

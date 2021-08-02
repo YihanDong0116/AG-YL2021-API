@@ -20,6 +20,7 @@ class AddEdgeEvent extends Event {
     fromNode.addEdge(edge);
     toNode.addEdge(edge);
     graph.edges.push(edge);
+    edge.focus();
   }
 }
 

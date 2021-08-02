@@ -1,5 +1,7 @@
 const eventFactory = require('./eventFactory');
 const Subscription = require('./subscription');
+const Node = require('./node');
+const Edge = require('./edge');
 
 const makeAndApplyEvent = (eventData, graph) => {
   const event = eventFactory.make({
@@ -45,6 +47,7 @@ class Graph {
         y,
       },
     }, this);
+    return this.nodes[this.nodes.length - 1];
   }
 
   addEdge(fromNodeId, toNodeId, name, weight) {
@@ -57,6 +60,7 @@ class Graph {
         weight,
       },
     }, this);
+    return this.edges[this.edges.length - 1];
   }
 
   removeNode(nodeId) {
@@ -112,6 +116,42 @@ class Graph {
     const node = this.nodes.find((n) => n.id === nodeId);
     if (!node) throw new Error(`node with id ${nodeId} not found`);
     return node;
+  }
+
+  clearFocus() {
+    this.nodes.forEach((n) => {
+      n.clearFocus();
+    });
+    this.edges.forEach((e) => {
+      e.clearFocus();
+    });
+  }
+
+  init(nodes, edges) {
+    this.nodes = nodes.map((n) => {
+      if (!n.id) {
+        throw new Error('nodes must have an id');
+      }
+      const node = new Node(n.name || '', n.x || 0, n.y || 0, this);
+      node.id = n.id;
+      return node;
+    });
+
+    this.edges = edges.map((e) => {
+      if (!e.id) {
+        throw new Error('edges must have an id');
+      }
+      const fromNode = this.getNodeById(e.fromNodeId);
+      const toNode = this.getNodeById(e.toNodeId);
+      const edge = new Edge(fromNode, toNode, e.weight || 1, e.name || '', this);
+      edge.id = e.id;
+      edge.fromNodeId = fromNode.id;
+      edge.toNodeId = toNode.id;
+      fromNode.edges.push(edge);
+      toNode.edges.push(edge);
+      return edge;
+    });
+    return this;
   }
 }
 

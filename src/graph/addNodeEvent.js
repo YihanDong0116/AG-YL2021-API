@@ -13,6 +13,7 @@ class AddNodeEvent extends Event {
     graph.nodes.push(node);
     // eslint-disable-next-line no-param-reassign
     graph.currentNode = graph.currentNode || node;
+    node.focus();
   }
 }
 

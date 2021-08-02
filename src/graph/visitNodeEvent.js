@@ -12,6 +12,7 @@ class VisitNodeEvent extends Event {
     node.visited = true;
     // eslint-disable-next-line no-param-reassign
     graph.currentNode = node;
+    node.focus();
   }
 }
 

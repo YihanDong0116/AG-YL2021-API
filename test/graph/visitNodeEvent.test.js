@@ -7,6 +7,7 @@ describe('VisitNodeEvent tests', () => {
     // given
     const graph = new Graph();
     const node = new Node();
+    node.graph = graph;
     graph.nodes.push(node);
 
     const visitNodeEvent = new VisitNodeEvent({
@@ -22,6 +23,7 @@ describe('VisitNodeEvent tests', () => {
     const visitedNode = graph.nodes[0];
     expect(visitedNode).toBe(node);
     expect(visitedNode.visited).toBe(true);
+    expect(visitedNode.focused).toBe(true);
   });
 
   test('given visit node event and graph does not have node when apply then throws', () => {

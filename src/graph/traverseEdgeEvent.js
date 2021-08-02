@@ -10,6 +10,7 @@ class TraverseEdgeEvent extends Event {
   apply(graph) {
     const edge = graph.getEdgeById(this.data.edgeId);
     edge.traversed = true;
+    edge.focus();
   }
 }
 

@@ -79,4 +79,44 @@ describe('Node tests', () => {
     expect(node.edges.length).toBe(1);
     expect(node.edges[0]).toBe(otherEdge);
   });
+
+  test('given node when visit node then calls graph', () => {
+    // given
+    const graph = new Graph();
+    const graphSpy = jest.spyOn(graph, 'visitNode').mockImplementation(() => {});
+    const node = new Node('someName', 1, 1, graph);
+
+    // when
+    node.visit();
+
+    // then
+    expect(graphSpy).toHaveBeenCalledWith(node.id);
+  });
+
+  test('given node focused when clearFocus then node focus reset', () => {
+    // given
+    const node = new Node('someName', 1, 1, null);
+    node.focused = true;
+
+    // when
+    node.clearFocus();
+
+    // then
+    expect(node.focused).toBe(false);
+  });
+
+  test('given node not focused when focus then focus cleared from graph amd node focus set', () => {
+    // given
+    const graph = new Graph();
+    const graphSpy = jest.spyOn(graph, 'clearFocus').mockImplementation(() => {});
+    const node = new Node('someName', 1, 1, graph);
+    node.focused = false;
+
+    // when
+    node.focus();
+
+    // then
+    expect(graphSpy).toHaveBeenCalled();
+    expect(node.focused).toBe(true);
+  });
 });

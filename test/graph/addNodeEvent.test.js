@@ -25,5 +25,6 @@ describe('AddNodeEvent tests', () => {
     expect(newNode.x).toBe(1);
     expect(newNode.y).toBe(2);
     expect(graph.currentNode).toBe(newNode);
+    expect(newNode.focused).toBe(true);
   });
 });

@@ -9,6 +9,20 @@ class Node {
     this.edges = [];
     this.visited = false;
     this.graph = graph;
+    this.focused = false;
+  }
+
+  visit() {
+    this.graph.visitNode(this.id);
+  }
+
+  focus() {
+    this.graph.clearFocus();
+    this.focused = true;
+  }
+
+  clearFocus() {
+    this.focused = false;
   }
 
   addEdge(edge) {

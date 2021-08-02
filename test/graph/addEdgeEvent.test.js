@@ -44,6 +44,7 @@ describe('AddEdgeEvent tests', () => {
     expect(toNode.edges[0]).toBe(newEdge);
     expect(graphSpy).toHaveBeenCalledWith(fromNode.id);
     expect(graphSpy).toHaveBeenCalledWith(toNode.id);
+    expect(newEdge.focused).toBe(true);
   });
 
   test('given add edge event and edge already exists then throws', () => {

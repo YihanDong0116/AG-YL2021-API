@@ -7,6 +7,7 @@ describe('TraverseEdgeEvent tests', () => {
     // given
     const graph = new Graph();
     const edge = new Edge();
+    edge.graph = graph;
     graph.edges.push(edge);
 
     const traverseEdgeEvent = new TraverseEdgeEvent({
@@ -22,12 +23,14 @@ describe('TraverseEdgeEvent tests', () => {
     const traverseEdge = graph.edges[0];
     expect(traverseEdge).toBe(edge);
     expect(traverseEdge.traversed).toBe(true);
+    expect(traverseEdge.focused).toBe(true);
   });
 
   test('given traverse edge event and graph does not have edge when apply then throws', () => {
     // given
     const graph = new Graph();
     const edge = new Edge();
+    edge.graph = graph;
     graph.edges.push(edge);
 
     const traverseEdgeEvent = new TraverseEdgeEvent({
