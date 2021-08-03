@@ -3,6 +3,23 @@ const yup = require('yup');
 const { LearnPage } = require('./learnPage');
 const { PracticePage } = require('./practicePage');
 
+const graphSchema = yup.object().shape({
+  height: yup.number().integer().required(),
+  width: yup.number().integer().required(),
+  nodes: yup.array().of(yup.object().shape({
+    id: yup.string().required(),
+    name: yup.string().required(),
+    x: yup.number().integer().required(),
+    y: yup.number().integer().required(),
+  })).required(),
+  edges: yup.array().of(yup.object().shape({
+    id: yup.string().required(),
+    name: yup.string(),
+    fromNodeId: yup.string().required(),
+    toNodeId: yup.string().required(),
+  })).required(),
+});
+
 const pageSchema = yup.object().shape({
   title: yup.string().required(),
   type: yup.string().required(),
@@ -32,43 +49,13 @@ const imageSectionSchema = yup.object().shape({
 
 const graphSectionSchema = yup.object().shape({
   type: yup.string().required(),
-  content: yup.object().shape({
-    height: yup.number().integer().required(),
-    width: yup.number().integer().required(),
-    nodes: yup.array().of(yup.object().shape({
-      id: yup.string().required(),
-      name: yup.string().required(),
-      x: yup.number().integer().required(),
-      y: yup.number().integer().required(),
-    })).required(),
-    edges: yup.array().of(yup.object().shape({
-      id: yup.string().required(),
-      name: yup.string(),
-      fromNodeId: yup.string().required(),
-      toNodeId: yup.string().required(),
-    })).required(),
-  }).required(),
+  content: graphSchema,
 });
 
 const graphAnimationSectionSchema = yup.object().shape({
   type: yup.string().required(),
   content: yup.object().shape({
-    initialGraph: yup.object().shape({
-      height: yup.number().integer().required(),
-      width: yup.number().integer().required(),
-      nodes: yup.array().of(yup.object().shape({
-        id: yup.string().required(),
-        name: yup.string().required(),
-        x: yup.number().integer().required(),
-        y: yup.number().integer().required(),
-      })).required(),
-      edges: yup.array().of(yup.object().shape({
-        id: yup.string().required(),
-        name: yup.string(),
-        fromNodeId: yup.string().required(),
-        toNodeId: yup.string().required(),
-      })).required(),
-    }),
+    initialGraph: graphSchema,
     events: yup.array().of(yup.object().shape({
       type: yup.string().required(),
       data: yup.mixed().defined(),
@@ -103,20 +90,12 @@ const multichoiceProblemDataSchema = yup.object().shape({
 
 const graphCreatorProblemDataSchema = yup.object().shape({});
 
-const graphSelectorProblemDataSchema = yup.object().shape({
-  height: yup.number().integer().required(),
-  width: yup.number().integer().required(),
-  nodes: yup.array().of(yup.object().shape({
-    id: yup.string().required(),
+const graphSelectorProblemDataSchema = graphSchema;
+
+const graphBlocklyProblemSchema = yup.object().shape({
+  initialGraph: graphSchema,
+  blocks: yup.array().of(yup.object().shape({
     name: yup.string().required(),
-    x: yup.number().integer().required(),
-    y: yup.number().integer().required(),
-  })).required(),
-  edges: yup.array().of(yup.object().shape({
-    id: yup.string().required(),
-    name: yup.string(),
-    fromNodeId: yup.string().required(),
-    toNodeId: yup.string().required(),
   })).required(),
 });
 
@@ -157,6 +136,9 @@ const getProblemData = (problem) => {
       break;
     case 'graphSelector':
       schema = graphSelectorProblemDataSchema;
+      break;
+    case 'graphBlockly':
+      schema = graphBlocklyProblemSchema;
       break;
     default:
       throw new Error(`unknown problem type ${problem.type}`);
