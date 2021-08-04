@@ -7,7 +7,7 @@ module.exports = {
   type: 'practice',
   problem: {
     type: 'graphCreator',
-    question: 'Create a graph with nodes [a, b, c, d] and edges [(a, b), (b, a), (b, c), (c, d)]',
+    question: 'Create a graph with nodes a, b, c and d and edges (a, b), (b, a), (b, c) and (c, d)',
     data: {},
     hints: [
       'The nodes on this graph should have the labels [a, b, c, d] and recall that the edge (a, b) is a path from node a to node b',
