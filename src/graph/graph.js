@@ -153,6 +153,15 @@ class Graph {
     });
     return this;
   }
+
+  copy() {
+    const graph = new Graph();
+    graph.edges = [...this.edges];
+    graph.nodes = [...this.nodes];
+    graph.events = [...this.events];
+    graph.subscriptions = { ...this.subscriptions };
+    return graph;
+  }
 }
 
 module.exports = Graph;

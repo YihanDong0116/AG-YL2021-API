@@ -32,42 +32,30 @@ module.exports = {
             x: 100,
             y: 200,
           },
-          {
-            id: 'e',
-            name: 'e',
-            x: 300,
-            y: 200,
-          },
         ],
         edges: [
           {
             id: '1',
-            name: '(a, b)',
+            name: '',
             fromNodeId: 'a',
             toNodeId: 'b',
           },
           {
             id: '2',
-            name: '(a, c)',
+            name: '',
             fromNodeId: 'a',
             toNodeId: 'c',
           },
           {
-            id: '3',
-            name: '(a, d)',
+            id: '4',
+            name: '',
             fromNodeId: 'a',
             toNodeId: 'd',
           },
           {
-            id: '4',
-            name: '(a, e)',
-            fromNodeId: 'a',
-            toNodeId: 'e',
-          },
-          {
             id: '5',
-            name: '(a, e)',
-            fromNodeId: 'e',
+            name: '',
+            fromNodeId: 'd',
             toNodeId: 'a',
           },
         ],
@@ -75,7 +63,7 @@ module.exports = {
     },
     {
       type: 'text',
-      content: 'So we have seen that a graph is a collection of nodes and edges. We have a clear system to describe a graph by labelling these nodes and edges. The nodes of the graph below are 1, 2, 3, 4, 5 and the edges are (1,2), (2,1), (2, 3), (3,2), (3,4), (3,5), (4,3), (4,1), (5,3), (1,4). All of this is going to be very useful very soon, we promise!',
+      content: 'So we have seen that a graph is a collection of nodes and edges. We have a clear system to describe a graph by labelling its nodes and edges. The nodes of the graph below are a, b, c, d and the edges are (a, b), (a, c), (a, d), (d, a). In the previous parts of this course we have always presented graphs with labelled edges, for the rest of this course we will omit the names of edges as we have for the graph above.',
     },
   ],
 };

@@ -15,14 +15,14 @@ const initialGraph = {
       y: 100,
     },
     {
-      id: 'c',
-      name: 'c',
+      id: 'd',
+      name: 'd',
       x: 200,
       y: 300,
     },
     {
-      id: 'd',
-      name: 'd',
+      id: 'c',
+      name: 'c',
       x: 100,
       y: 200,
     },
@@ -74,11 +74,11 @@ const initialGraph = {
 };
 
 module.exports = {
-  title: 'Putting Code Blocks to Work',
+  title: 'Putting Those Blocks to Work!',
   type: 'practice',
   problem: {
     type: 'graphBlockly',
-    question: 'Use the provided blocks to build an algorithm that visits each node in the graph in any order.',
+    question: 'Use the provided blocks to build an algorithm that visits each node of the graph below in any order.',
     data: {
       initialGraph,
       blocks: [
