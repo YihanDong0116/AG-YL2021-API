@@ -1,29 +1,97 @@
-const uuid = require('uuid');
-
 module.exports = {
-  id: uuid.v4(),
   title: 'Graphs are Nodes and Edges',
   type: 'learn',
   sections: [
     {
-      type: 'image',
-      content: 'image/australian-map-with-graph.png',
+      type: 'text',
+      content: 'Check out the image below - it\'s a graph, and you\'ll be seeing quite a few more like it in this course! The nodes of this graph are the pink circles, and the green lines between them are it\'s edges.',
+    },
+    {
+      type: 'graph',
+      content: {
+        width: 400,
+        height: 400,
+        nodes: [
+          {
+            id: 'a',
+            name: 'a',
+            x: 200,
+            y: 200,
+          },
+          {
+            id: 'b',
+            name: 'b',
+            x: 200,
+            y: 100,
+          },
+          {
+            id: 'c',
+            name: 'c',
+            x: 200,
+            y: 300,
+          },
+          {
+            id: 'd',
+            name: 'd',
+            x: 100,
+            y: 200,
+          },
+          {
+            id: 'e',
+            name: 'e',
+            x: 300,
+            y: 200,
+          },
+        ],
+        edges: [
+          {
+            id: '1',
+            name: '(a, b)',
+            fromNodeId: 'a',
+            toNodeId: 'b',
+          },
+          {
+            id: '2',
+            name: '(a, c)',
+            fromNodeId: 'a',
+            toNodeId: 'c',
+          },
+          {
+            id: '3',
+            name: '(a, d)',
+            fromNodeId: 'a',
+            toNodeId: 'd',
+          },
+          {
+            id: '4',
+            name: '(a, e)',
+            fromNodeId: 'a',
+            toNodeId: 'e',
+          },
+          {
+            id: '5',
+            name: '(e, a)',
+            fromNodeId: 'e',
+            toNodeId: 'a',
+          },
+        ],
+      },
     },
     {
       type: 'text',
-      content: 'A graph is a collection of nodes and edges. We typically use graphs to show how data is connected. We can think of a map as a graph, the locations are nodes and the edges are roads or paths from one location to another.',
+      content: 'If we\'re going to study graphs together we\'re going to need a precise way to describe them. For now it will be enough to just list a graph\'s two most important features, it\'s nodes and edges - later we will need to introduce some more features but first up we will keep it simple.',
     },
     {
       type: 'text',
-      content: 'Graphs can describe much more than just maps, we can also think of a social network as a graph, each person could be a node and if two people are friends we can connect them via an edge.',
+      content: 'We will describe a node of a graph using the node\'s name, for example the graph above has a node c, and also d - plus a few more of course.',
     },
     {
       type: 'text',
-      content: 'Many interesting systems can be described as a graph, and the best thing about a graph is that it’s very easy for a computer to understand.',
+      content: 'Edges also have names, in this course we will name an edge according to the pair of nodes it connects, for example the nodes a and b above are connected by an edge named (a, b). Edges have a direction, in the image above this is shown by an arrow on the edge line graphic, but this direction is also present in the name of each edge, the node that the edge extends from will always be presented first and the node that the edge leads to will be second so that (a, b) is the edge that extends from node a and ends at node b.',
     },
     {
       type: 'text',
-      content: 'It’s our map of Australia again, but this time as a graph with nodes and edges. Each node is a capital city, what might the edges represent?',
+      content: 'Simple enough so far? We hope so! If you\'re not so sure just yet don\'t worry we will get heaps of practice in soon enough!',
     },
   ],
 };

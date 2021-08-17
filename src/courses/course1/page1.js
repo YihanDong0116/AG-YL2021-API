@@ -1,7 +1,4 @@
-const uuid = require('uuid');
-
 module.exports = {
-  id: uuid.v4(),
   title: 'Dijkstra’s Algorithm',
   type: 'learn',
   sections: [

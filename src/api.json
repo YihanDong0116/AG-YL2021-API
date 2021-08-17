@@ -2,7 +2,7 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Algorithms API",
-    "version": "1.0.3"
+    "version": "2.1.0"
   },
   "servers": [
     {
@@ -279,7 +279,8 @@
                 "enum": [
                   "code",
                   "text",
-                  "multichoice"
+                  "multichoice",
+                  "graphCreator"
                 ]
               },
               "question": {
@@ -295,6 +296,13 @@
                 "type": "array", 
                 "items": {
                   "type": "string"
+                }
+              },
+              "sections": {
+                "description": "The sections of the problem, which may provide additional information not in the question itself",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Section"
                 }
               }
             },
@@ -345,7 +353,10 @@
               "fail"
             ]
           },
-          "tests": {
+          "feedback": {
+            "type": "string"
+          },
+          "results": {
             "type": "array",
             "items": {
               "type": "object",
@@ -362,7 +373,7 @@
                   "description": "Then name of the executed test case, not provided for hidden test cases",
                   "type": "string"
                 },
-                "result": {
+                "status": {
                   "description": "The result of executing the submission against this test case",
                   "type": "string",
                   "enum": [
@@ -386,7 +397,7 @@
         },
         "required": [
           "status",
-          "tests"
+          "results"
         ]
       },
       "Id": {
