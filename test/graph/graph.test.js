@@ -561,4 +561,26 @@ describe('Graph tests', () => {
     // when + then
     expect(() => graph.init(nodes, edges)).toThrow();
   });
+
+  test('given graph when copy then result equals to original graph', () => {
+    // given
+    const graph = new Graph();
+    const eventType = 'event';
+    const handler = () => {};
+
+    graph.on(eventType, handler);
+    graph.addNode('x', 1, 2);
+    graph.addNode('y', 3, 4);
+
+    graph.addEdge(0, 1, 'edge', 1);
+
+    // when
+    const newGraph = graph.copy();
+
+    // then
+    expect(graph.subscriptions).toEqual(newGraph.subscriptions);
+    expect(graph.edges).toEqual(newGraph.edges);
+    expect(graph.nodes).toEqual(newGraph.nodes);
+    expect(graph.events).toEqual(newGraph.events);
+  });
 });
