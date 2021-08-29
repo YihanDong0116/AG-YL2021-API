@@ -52,6 +52,18 @@ const graphSectionSchema = yup.object().shape({
   content: graphSchema,
 });
 
+const blocklyExampleSectionSchema = yup.object().shape({
+  type: yup.string().required(),
+  content: yup.object().shape({
+    blocks: yup.string().required(),
+    variables: yup.mixed().required(),
+    output: yup.object().shape({
+      type: yup.string().required(),
+      name: yup.string(),
+    }).required(),
+  }).required(),
+});
+
 const graphAnimationSectionSchema = yup.object().shape({
   type: yup.string().required(),
   content: yup.object().shape({
@@ -116,6 +128,9 @@ const getSection = (section) => {
       break;
     case 'graphAnimation':
       schema = graphAnimationSectionSchema;
+      break;
+    case 'blocklyExample':
+      schema = blocklyExampleSectionSchema;
       break;
     default:
       throw new Error(`unknown section type ${section.type}`);

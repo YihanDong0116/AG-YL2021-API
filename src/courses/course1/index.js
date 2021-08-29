@@ -8,6 +8,7 @@ const page7 = require('./page7');
 const graphSelectionProblem = require('./graphSelectionProblem');
 const reachabilityPage = require('./rechabilityAnimation');
 const visitNodesBlocklyProblem = require('./visitNodesBlocklyProblem');
+const blocklyExamplePage = require('./blocklyExamplePage');
 
 module.exports = {
   name: 'Dijkstra’s Algorithm',
@@ -22,5 +23,6 @@ module.exports = {
     reachabilityPage,
     page6,
     visitNodesBlocklyProblem,
+    blocklyExamplePage,
   ],
 };

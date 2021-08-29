@@ -94,6 +94,9 @@ module.exports = {
         {
           name: 'traverse_edge',
         },
+        {
+          name: 'print_message',
+        },
       ],
     },
     hints: [
