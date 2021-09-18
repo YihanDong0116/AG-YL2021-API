@@ -17,17 +17,17 @@ module.exports = {
         },
         blocks: `
         <xml xmlns="http://www.w3.org/1999/xhtml">
-            <block type="if_do">
+            <block type="if_do" x="0" y="0">
               <value name="CONDITION">
-                <block type="less_than">
+                <block type="greater_than">
                   <value name="ELEM_1">
                     <block type="math_number">
-                      <field name="NUM">1</field>
+                      <field name="NUM">2</field>
                     </block>
                   </value>
                   <value name="ELEM_2">
                     <block type="math_number">
-                      <field name="NUM">2</field>
+                      <field name="NUM">1</field>
                     </block>
                   </value>
                 </block>
@@ -37,7 +37,18 @@ module.exports = {
                   <field name="VAR_NAME">execution.variables.secretMessage</field>
                 </block>
               </statement>
-          </block>
+            </block>
+            <block type="print_var" x="0" y="90">
+              <value name="VARIABLE">
+                <block type="variable">
+                  <field name="VAR" id="QJD^+@[RVIwbLSZoDb:V">default</field>
+                </block>
+              </value>
+            </block>
+            <block type="edge_weight" x="0" y="140">
+              <value name="EDGE">
+              </value>
+            </block>
         </xml>
         `,
         output: {

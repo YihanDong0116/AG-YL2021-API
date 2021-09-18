@@ -20,6 +20,14 @@ module.exports = {
           <block type="print_message" x="0" y="0">
             <field name="VAR_NAME">execution.variables.secretMessage</field>
           </block>
+          <block type="set_to" x="0" y="60">
+            <field name="VAR" id="QJD^+@[RVIwbLSZoDb:V">default</field>
+            <value name="VALUE">
+              <block type="math_number">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
         </xml>
         `,
         output: {
