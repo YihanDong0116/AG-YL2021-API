@@ -15,6 +15,7 @@ describe('Node tests', () => {
     expect(node.x).toBe(1);
     expect(node.y).toBe(2);
     expect(node.edges).toEqual([]);
+    expect(node.distance).toEqual({});
   });
 
   test('given node when addEdge then edge added to edges', () => {
@@ -118,5 +119,15 @@ describe('Node tests', () => {
     // then
     expect(graphSpy).toHaveBeenCalled();
     expect(node.focused).toBe(true);
+  });
+
+  test('given source node when it has empty distance with other nodes', () => {
+    // given
+    const graph = new Graph();
+    const srcNode = new Node('src', 1, 2, graph);
+    const destNode = new Node('dest', 2, 3, graph);
+
+    // then
+    expect(srcNode.getDistance(destNode)).toBe(null);
   });
 });
