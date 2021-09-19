@@ -38,14 +38,7 @@ module.exports = {
                 </block>
               </statement>
             </block>
-            <block type="print_var" x="0" y="90">
-              <value name="VARIABLE">
-                <block type="variable">
-                  <field name="VAR" id="QJD^+@[RVIwbLSZoDb:V">default</field>
-                </block>
-              </value>
-            </block>
-            <block type="edge_weight" x="0" y="140">
+            <block type="edge_weight" x="0" y="90">
               <value name="EDGE">
               </value>
             </block>
