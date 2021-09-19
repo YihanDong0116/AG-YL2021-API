@@ -1,7 +1,7 @@
 // graph creator problem
-const graphNodes = ['a', 'b', 'c', 'f', 'h', 'd', 'e', 'g', 'i'];
+const graphNodes = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'];
 const graphEdges = ['2', '7', '14', '18'];
-const wrongNode = ' ';
+let wrongNode = 'hello';
 
 module.exports = {
   title: 'Dijkstra Routine Selection',
@@ -32,34 +32,34 @@ module.exports = {
           y: 300,
         },
         {
-          id: 'd',
-          name: 'd',
-          x: 250,
-          y: 100,
-        },
-        {
-          id: 'e',
-          name: 'e',
-          x: 250,
-          y: 200,
-        },
-        {
           id: 'f',
           name: 'f',
           x: 250,
-          y: 300,
-        },
-        {
-          id: 'g',
-          name: 'g',
-          x: 350,
           y: 100,
         },
         {
           id: 'h',
           name: 'h',
           x: 350,
+          y: 100,
+        },
+        {
+          id: 'd',
+          name: 'd',
+          x: 250,
           y: 300,
+        },
+        {
+          id: 'e',
+          name: 'e',
+          x: 350,
+          y: 300,
+        },
+        {
+          id: 'g',
+          name: 'g',
+          x: 250,
+          y: 200,
         },
         {
           id: 'i',
@@ -97,84 +97,84 @@ module.exports = {
           id: '5',
           name: '8',
           fromNodeId: 'b',
-          toNodeId: 'd',
+          toNodeId: 'f',
         },
         {
           id: '6',
           name: '7',
           fromNodeId: 'c',
-          toNodeId: 'e',
+          toNodeId: 'g',
         },
         {
           id: '7',
           name: '1',
           fromNodeId: 'c',
-          toNodeId: 'f',
+          toNodeId: 'd',
         },
         {
           id: '8',
           name: '2',
-          fromNodeId: 'd',
-          toNodeId: 'e',
+          fromNodeId: 'f',
+          toNodeId: 'g',
         },
         {
           id: '9',
           name: '2',
-          fromNodeId: 'e',
-          toNodeId: 'd',
+          fromNodeId: 'g',
+          toNodeId: 'f',
         },
         {
           id: '10',
           name: '6',
-          fromNodeId: 'e',
-          toNodeId: 'f',
+          fromNodeId: 'g',
+          toNodeId: 'd',
         },
         {
           id: '11',
           name: '6',
-          fromNodeId: 'f',
-          toNodeId: 'e',
+          fromNodeId: 'd',
+          toNodeId: 'g',
         },
         {
           id: '12',
           name: '7',
-          fromNodeId: 'd',
-          toNodeId: 'g',
-        },
-        {
-          id: '13',
-          name: '4',
-          fromNodeId: 'd',
-          toNodeId: 'h',
-        },
-        {
-          id: '14',
-          name: '2',
           fromNodeId: 'f',
           toNodeId: 'h',
         },
         {
+          id: '13',
+          name: '4',
+          fromNodeId: 'f',
+          toNodeId: 'e',
+        },
+        {
+          id: '14',
+          name: '2',
+          fromNodeId: 'd',
+          toNodeId: 'e',
+        },
+        {
           id: '15',
           name: '14',
-          fromNodeId: 'g',
-          toNodeId: 'h',
+          fromNodeId: 'h',
+          toNodeId: 'e',
         },
         {
           id: '16',
           name: '14',
-          fromNodeId: 'h',
-          toNodeId: 'g',
+          fromNodeId: 'e',
+          toNodeId: 'h',
         },
         {
           id: '17',
           name: '9',
-          fromNodeId: 'g',
+          fromNodeId: 'h',
           toNodeId: 'i',
         },
         {
           id: '18',
           name: '10',
-          fromNodeId: 'h',
+          fromNodeId: 'e',
           toNodeId: 'i',
         },
       ],
@@ -186,38 +186,75 @@ module.exports = {
   },
   tests: [
     {
+      feedback: 'First node is not correct.',
+      check: (inputs) => inputs.nodes[0] === graphNodes[0],
+    },
+    {
+      feedback: 'Second node is not correct.',
+      check: (inputs) => inputs.nodes[1] === graphNodes[1],
+    },
+    {
+      feedback: 'Third node is not correct.',
+      check: (inputs) => inputs.nodes[2] === graphNodes[2],
+    },
+    {
+      feedback: 'Fourth node is not correct.',
+      check: (inputs) => inputs.nodes[3] === graphNodes[3],
+    },
+    {
+      feedback: 'Fifth node is not correct.',
+      check: (inputs) => inputs.nodes[4] === graphNodes[4],
+    },
+    {
+      feedback: 'Sixth node is not correct.',
+      check: (inputs) => inputs.nodes[5] === graphNodes[5],
+    },
+    {
+      feedback: 'Seventh node is not correct.',
+      check: (inputs) => inputs.nodes[6] === graphNodes[6],
+    },
+    {
+      feedback: 'Eighth node is not correct.',
+      check: (inputs) => inputs.nodes[7] === graphNodes[7],
+    },
+    {
+      feedback: 'Last node is not correct.',
+      check: (inputs) => inputs.nodes[8] === graphNodes[8],
+    },
+    {
       feedback: 'It looks like you haven\'t selected the correct number of nodes.',
       check: (inputs) => inputs.nodes.length === graphNodes.length,
     },
-    {
-      feedback: 'It looks like you haven\'t selected the correct number of edges.',
-      check: (inputs) => inputs.edges.length === graphEdges.length,
-    },
-    {
-      feedback: `It looks like some of your nodes are not right${wrongNode}`,
-      check: (inputs) => {
-        for (let i = 0; i < graphNodes.length; i += 1) {
-          if (inputs.nodes[i] !== graphNodes[i]) {
-            wrongNode.concat(inputs.nodes[i].toNodeId);
-            // TODO: solve the feedback problem: transfer the node that students select wrongly.
-            // eslint-disable-next-line no-console
-            console.log(inputs.nodes[i]);
-            return false;
-          }
-        }
-        return true;
-      },
-    },
-    {
-      feedback: 'It looks like some of your edges are not right.',
-      check: (inputs) => {
-        for (let i = 0; i < graphEdges.length; i += 1) {
-          if (inputs.edges.indexOf(graphEdges[i]) === -1) {
-            return false;
-          }
-        }
-        return true;
-      },
-    },
+    // {
+    //   feedback: 'It looks like you haven\'t selected the correct number of edges.',
+    //   check: (inputs) => inputs.edges.length === graphEdges.length,
+    // },
+    // {
+    //   feedback: wrongNode,
+    //   check: (inputs) => {
+    //     for (let i = 0; i < graphNodes.length; i += 1) {
+    //       if (inputs.nodes.indexOf(graphNodes[i]) !== i) {
+    //         wrongNode = inputs.nodes[i];
+    //         // wrongNode.concat(inputs.nodes[i].toNodeId);
+    //         // TODO: solve the feedback problem: transfer the node that students select wrongly.
+    //         // eslint-disable-next-line no-console
+    //         // console.log(inputs.nodes[i]);
+    //         return false;
+    //       }
+    //     }
+    //     return true;
+    //   },
+    // },
+    // {
+    //   feedback: 'It looks like some of your edges are not right.',
+    //   check: (inputs) => {
+    //     for (let i = 0; i < graphEdges.length; i += 1) {
+    //       if (inputs.edges.indexOf(graphEdges[i]) === -1) {
+    //         return false;
+    //       }
+    //     }
+    //     return true;
+    //   },
+    // },
   ],
 };
