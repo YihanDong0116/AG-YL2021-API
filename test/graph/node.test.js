@@ -121,13 +121,16 @@ describe('Node tests', () => {
     expect(node.focused).toBe(true);
   });
 
-  test('given source node when it has empty distance with other nodes', () => {
+  test('given source node when it has distance with other nodes', () => {
     // given
     const graph = new Graph();
     const srcNode = new Node('src', 1, 2, graph);
+    const middleNode = new Node('src', 2, 2, graph);
     const destNode = new Node('dest', 2, 3, graph);
-
+    srcNode.getDistance()[destNode.getId()] = 50;
+    // eslint-disable-next-line max-len
+    srcNode.getDistance()[middleNode.getId()] = srcNode.getDistance()[middleNode.getId()] - srcNode.getDistance()[destNode.getId()];
     // then
-    expect(srcNode.getDistance(destNode)).toBe(null);
+    expect(srcNode.getDistance()[middleNode.getId()]).toBe(-51);
   });
 });
