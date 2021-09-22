@@ -105,4 +105,19 @@ describe('Edge tests', () => {
     expect(graphSpy).toHaveBeenCalled();
     expect(edge.focused).toBe(true);
   });
+
+  test('given edge and expect the weight as initialed', () => {
+    // given
+    const fromNode = new Node();
+    const toNode = new Node();
+    const graph = new Graph();
+
+    const edge = new Edge(fromNode, toNode, 1, 'someName', graph);
+
+    // when
+    const edgeWeight = edge.getWeight();
+
+    // then
+    expect(edgeWeight).toBe(1);
+  });
 });
