@@ -11,8 +11,6 @@ const visitNodesBlocklyProblem = require('./visitNodesBlocklyProblem');
 const blocklyExamplePage = require('./blocklyExamplePage');
 const shortestPathPage1 = require('./shortestPathPage1');
 const shortestPathPracticePage1 = require('./shortestPathPracticePage1');
-const blocklyDesign = require('./blocklyDesignPage');
-const graphSelectionProblem2 = require('./graphSelectionProblem2');
 
 module.exports = {
   name: 'Dijkstra’s Algorithm',
@@ -21,7 +19,6 @@ module.exports = {
     page2,
     page3,
     graphSelectionProblem,
-    graphSelectionProblem2,
     page7Intro,
     page7,
     page4,
@@ -31,6 +28,5 @@ module.exports = {
     blocklyExamplePage,
     shortestPathPage1,
     shortestPathPracticePage1,
-    blocklyDesign,
   ],
 };
