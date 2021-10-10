@@ -1,6 +1,7 @@
 const initialGraph = {
   width: 400,
   height: 400,
+  sourceNodeId: 'a',
   nodes: [
     {
       id: 'a',
@@ -82,9 +83,6 @@ module.exports = {
     data: {
       initialGraph,
       blocks: [
-        {
-          name: 'for_each_graph_elem_in_graph',
-        },
         {
           name: 'graph',
         },
