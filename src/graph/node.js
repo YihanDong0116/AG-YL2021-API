@@ -10,6 +10,7 @@ class Node {
     this.visited = false;
     this.graph = graph;
     this.focused = false;
+    this.distance = {};
   }
 
   visit() {
@@ -39,6 +40,14 @@ class Node {
 
   getPathsTo() {
     return this.edges.filter((e) => e.toNode.id === this.id);
+  }
+
+  getDistance() {
+    return this.distance;
+  }
+
+  getId() {
+    return this.id;
   }
 }
 
