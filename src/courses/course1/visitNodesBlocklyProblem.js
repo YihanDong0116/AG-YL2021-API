@@ -97,6 +97,9 @@ module.exports = {
         {
           name: 'print_message',
         },
+        {
+          name: 'var_name',
+        },
       ],
     },
     hints: [
