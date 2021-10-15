@@ -164,6 +164,12 @@ module.exports = {
         {
           name: 'x_in_xs',
         },
+        {
+          name: 'add',
+        },
+        {
+          name: 'if',
+        },
       ],
     },
     hints: [
