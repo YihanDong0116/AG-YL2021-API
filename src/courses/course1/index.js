@@ -13,6 +13,7 @@ const shortestPathPage1 = require('./shortestPathPage1');
 const shortestPathPracticePage1 = require('./shortestPathPracticePage1');
 const blocklyDesign = require('./blocklyDesignPage');
 const graphSelectionProblem2 = require('./graphSelectionProblem2');
+const blocklyProblem = require('./blocklyProblemPage');
 
 module.exports = {
   name: 'Dijkstra’s Algorithm',
@@ -32,5 +33,6 @@ module.exports = {
     shortestPathPage1,
     shortestPathPracticePage1,
     blocklyDesign,
+    blocklyProblem,
   ],
 };
