@@ -130,4 +130,20 @@ describe('Node tests', () => {
     // then
     expect(srcNode.getDistance()[destNode.getId()]).toBe(50);
   });
+
+  test('given node has neighbors when getNeighbors then return neighbors', () => {
+    // given
+    const node = new Node('src', 0, 1, null);
+    const neighbor = new Node('other', 0, 1, null);
+    const edge = new Edge(node, neighbor, 0, 'name', null);
+    const otherEdge = new Edge(neighbor, node, 0, 'name', null);
+    node.edges = [edge, otherEdge];
+
+    // when
+    const neighbors = node.getNeighbors();
+
+    // then
+    expect(neighbors.length).toBe(1);
+    expect(neighbors[0]).toBe(neighbor);
+  });
 });
