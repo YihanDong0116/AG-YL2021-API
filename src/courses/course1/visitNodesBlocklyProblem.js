@@ -83,16 +83,16 @@ module.exports = {
       initialGraph,
       blocks: [
         {
-          name: 'for_each_graph_elem_in_graph',
+          name: 'x_in_xs',
         },
         {
-          name: 'graph',
+          name: 'nodes',
+        },
+        {
+          name: 'edges',
         },
         {
           name: 'visit_node',
-        },
-        {
-          name: 'traverse_edge',
         },
         {
           name: 'print_message',
