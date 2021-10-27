@@ -131,6 +131,6 @@ describe('eventFactory tests', () => {
 
     // when
     // then
-    expect(() => eventFactory.make(eventData)).toThrow()
+    expect(() => eventFactory.make(eventData)).toThrow();
   });
 });
