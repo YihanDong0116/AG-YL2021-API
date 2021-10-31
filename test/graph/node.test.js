@@ -126,9 +126,15 @@ describe('Node tests', () => {
     const graph = new Graph();
     const srcNode = new Node('src', 0, 1, graph);
     const destNode = new Node('dest', 0, 3, graph);
+    graph.nodes = [srcNode, destNode];
     srcNode.getDistance()[destNode.getId()] = 50;
     // then
     expect(srcNode.getDistance()[destNode.getId()]).toBe(50);
+    expect(graph.events.length).toBe(1);
+    expect(graph.events[0].type).toBe('setDistance');
+    expect(graph.events[0].data.fromNodeId).toBe(srcNode.id);
+    expect(graph.events[0].data.toNodeId).toBe(destNode.id);
+    expect(graph.events[0].data.distance).toBe(50);
   });
 
   test('given node has neighbors when getNeighbors then return neighbors', () => {

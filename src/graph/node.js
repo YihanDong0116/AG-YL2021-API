@@ -11,6 +11,12 @@ class Node {
     this.graph = graph;
     this.focused = false;
     this.distance = {};
+    this.distanceProxy = new Proxy(this.distance, {
+      get: (target, prop) => target[prop],
+      set: (target, prop, value) => {
+        graph.setDistance(this.id, prop, value);
+      },
+    });
   }
 
   visit() {
@@ -59,7 +65,7 @@ class Node {
   }
 
   getDistance() {
-    return this.distance;
+    return this.distanceProxy;
   }
 
   getId() {
