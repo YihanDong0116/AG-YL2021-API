@@ -119,4 +119,18 @@ describe('eventFactory tests', () => {
     expect(event.time).toBeDefined();
     expect(event.data).toBe(eventData.data);
   });
+
+  test('given data for invalid type when make then throw', () => {
+    // given
+    const eventData = {
+      type: 'invalidType',
+      data: {
+        key: 'someValue',
+      },
+    };
+
+    // when
+    // then
+    expect(() => eventFactory.make(eventData)).toThrow();
+  });
 });

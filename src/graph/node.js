@@ -10,6 +10,13 @@ class Node {
     this.visited = false;
     this.graph = graph;
     this.focused = false;
+    this.distance = {};
+    this.distanceProxy = new Proxy(this.distance, {
+      get: (target, prop) => target[prop],
+      set: (target, prop, value) => {
+        graph.setDistance(this.id, prop, value);
+      },
+    });
   }
 
   visit() {
@@ -23,6 +30,22 @@ class Node {
 
   clearFocus() {
     this.focused = false;
+  }
+
+  getNeighbors() {
+    return this.edges.reduce((acc, e) => {
+      let neighbor;
+      if (e.toNode.id !== this.id) {
+        neighbor = e.toNode;
+      } else {
+        return acc;
+      }
+      const inList = acc.find((a) => a.id === neighbor.id);
+      if (!inList) {
+        acc.push(neighbor);
+      }
+      return acc;
+    }, []);
   }
 
   addEdge(edge) {
@@ -39,6 +62,14 @@ class Node {
 
   getPathsTo() {
     return this.edges.filter((e) => e.toNode.id === this.id);
+  }
+
+  getDistance() {
+    return this.distanceProxy;
+  }
+
+  getId() {
+    return this.id;
   }
 }
 

@@ -28,6 +28,10 @@ class Edge {
   linksNodes(fromNode, toNode) {
     return fromNode.id === this.fromNode.id && toNode.id === this.toNode.id;
   }
+
+  getWeight() {
+    return this.weight;
+  }
 }
 
 module.exports = Edge;

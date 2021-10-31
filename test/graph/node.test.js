@@ -15,6 +15,7 @@ describe('Node tests', () => {
     expect(node.x).toBe(1);
     expect(node.y).toBe(2);
     expect(node.edges).toEqual([]);
+    expect(node.distance).toEqual({});
   });
 
   test('given node when addEdge then edge added to edges', () => {
@@ -118,5 +119,37 @@ describe('Node tests', () => {
     // then
     expect(graphSpy).toHaveBeenCalled();
     expect(node.focused).toBe(true);
+  });
+
+  test('given source node when it has distance with other nodes', () => {
+    // given
+    const graph = new Graph();
+    const srcNode = new Node('src', 0, 1, graph);
+    const destNode = new Node('dest', 0, 3, graph);
+    graph.nodes = [srcNode, destNode];
+    srcNode.getDistance()[destNode.getId()] = 50;
+    // then
+    expect(srcNode.getDistance()[destNode.getId()]).toBe(50);
+    expect(graph.events.length).toBe(1);
+    expect(graph.events[0].type).toBe('setDistance');
+    expect(graph.events[0].data.fromNodeId).toBe(srcNode.id);
+    expect(graph.events[0].data.toNodeId).toBe(destNode.id);
+    expect(graph.events[0].data.distance).toBe(50);
+  });
+
+  test('given node has neighbors when getNeighbors then return neighbors', () => {
+    // given
+    const node = new Node('src', 0, 1, null);
+    const neighbor = new Node('other', 0, 1, null);
+    const edge = new Edge(node, neighbor, 0, 'name', null);
+    const otherEdge = new Edge(neighbor, node, 0, 'name', null);
+    node.edges = [edge, otherEdge];
+
+    // when
+    const neighbors = node.getNeighbors();
+
+    // then
+    expect(neighbors.length).toBe(1);
+    expect(neighbors[0]).toBe(neighbor);
   });
 });

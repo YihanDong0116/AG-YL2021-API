@@ -4,6 +4,7 @@ const { LearnPage } = require('./learnPage');
 const { PracticePage } = require('./practicePage');
 
 const graphSchema = yup.object().shape({
+  sourceNodeId: yup.string(),
   height: yup.number().integer().required(),
   width: yup.number().integer().required(),
   nodes: yup.array().of(yup.object().shape({
