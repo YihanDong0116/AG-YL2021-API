@@ -105,6 +105,8 @@ const graphCreatorProblemDataSchema = yup.object().shape({});
 
 const graphSelectorProblemDataSchema = graphSchema;
 
+const dijkstraProblemDataSchema = graphSchema;
+
 const graphBlocklyProblemSchema = yup.object().shape({
   initialGraph: graphSchema,
   blocks: yup.array().of(yup.object().shape({
@@ -155,6 +157,9 @@ const getProblemData = (problem) => {
       break;
     case 'graphBlockly':
       schema = graphBlocklyProblemSchema;
+      break;
+    case 'DijkstraProblem':
+      schema = dijkstraProblemDataSchema;
       break;
     default:
       throw new Error(`unknown problem type ${problem.type}`);

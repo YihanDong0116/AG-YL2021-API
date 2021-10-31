@@ -10,7 +10,9 @@ const reachabilityPage = require('./rechabilityAnimation');
 const visitNodesBlocklyProblem = require('./visitNodesBlocklyProblem');
 const shortestPathPage1 = require('./shortestPathPage1');
 const shortestPathPracticePage1 = require('./shortestPathPracticePage1');
+const dijkstraSelectionProblem = require('./dijkstraSelectionProblem');
 const blocklyDesign = require('./blocklyDesignPage');
+const blocklyExamplePage = require('./blocklyExamplePage');
 
 module.exports = {
   name: 'Dijkstra’s Algorithm',
@@ -24,9 +26,11 @@ module.exports = {
     page4,
     reachabilityPage,
     page6,
-    visitNodesBlocklyProblem,
     shortestPathPage1,
     shortestPathPracticePage1,
+    dijkstraSelectionProblem,
+    blocklyExamplePage,
+    visitNodesBlocklyProblem,
     blocklyDesign,
   ],
 };
