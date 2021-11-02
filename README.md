@@ -17,13 +17,13 @@ docker build . -t node-docker-heroku-cicd
 ## Test
 
 ``` shell script
-docker run -p 3000:3000 node-docker-heroku-cicd npm run test  
+docker run -p 3001:3001 node-docker-heroku-cicd npm run test  
 ```
 
 ## Start
 
 ``` shell script
-docker run -p 3000:3000 node-docker-heroku-cicd npm run start
+docker run -p 3001:3001 node-docker-heroku-cicd npm run start
 ```
 
 ## Browse

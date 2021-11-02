@@ -1,42 +1,75 @@
 const express = require('express');
+const yup = require('yup');
+const { InvalidFormat } = require('../error/invalidFormat');
+
+const { pageService } = require('../model');
 
 const router = express.Router();
 
+const pageSchema = yup.object().shape({
+  id: yup.string().uuid().required(),
+  title: yup.string().required(),
+  type: yup.string().oneOf(['learn', 'practice']).required(),
+  sections: yup.array().of(yup.object().shape({
+    type: yup.string().required(),
+    content: yup.mixed().required(),
+  })).when('type',
+    (value, schema) => (value === 'practice' ? schema.strip() : schema)),
+  problem: yup.object().when('type',
+    (value, schema) => (value === 'learn' ? schema.strip() : schema.shape({
+      type: yup.string().required(),
+      question: yup.string().required(),
+      data: yup.mixed().defined(),
+      hints: yup.array().of(yup.string()),
+      sections: yup.array().of(yup.object().shape({
+        type: yup.string().required(),
+        content: yup.mixed().required(),
+      })),
+    }))),
+});
+
+const submissionSchema = yup.object().shape({
+  type: yup.string().required(),
+  data: yup.mixed().defined(),
+});
+
+const resultSchema = yup.object().shape({
+  status: yup.string().oneOf(['pass', 'fail']).required(),
+  feedback: yup.string(),
+  results: yup.array().of(yup.object().shape({
+    type: yup.string().oneOf(['sample', 'hidden']).required(),
+    name: yup.string().required(),
+    status: yup.string().oneOf(['pass', 'fail']).required(),
+    feedback: yup.string(),
+  })),
+});
+
 /* GET specific page. */
-router.get('/:page_id', (req, res) => {
-  if (req.params.page_id === 'correct_page_id') {
-    const page = {
-      id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-      type: 'info',
-      sections: [
-        {
-          type: 'text',
-          content: 'viva la dijkstra',
-        },
-        {
-          type: 'image',
-          content: 'https://i.redd.it/tfugj4n3l6ez.png',
-        },
-        {
-          type: 'animation',
-          content: 'https://www.youtube.com/watch?v=k6Es9Qrh4Ao',
-        },
-      ],
-      problem: {
-        type: 'code',
-        data: {},
-      },
-    };
-    res.json(page);
-    // res.send(page);
-  } else {
-    res.status(404);
-    res.send('page_id does not exist!');
+router.get('/:id', (req, res, next) => {
+  try {
+    const page = pageService.getPageById(req.params.id);
+    const cast = pageSchema.cast(page, { stripUnknown: true });
+    return res.json(cast);
+  } catch (e) {
+    return next(e);
   }
 });
 
-router.post('/:page_id/submit', (req, res) => {
-  res.send('Will be decided after the course structure and problems types are defined');
+router.post('/:id/submit', (req, res, next) => {
+  try {
+    submissionSchema.validateSync(req.body);
+  } catch (e) {
+    return next(new InvalidFormat(`invalid request body: ${e.message}`));
+  }
+
+  try {
+    const castSubmission = submissionSchema.cast(req.body, { stripUnknown: true });
+    const result = pageService.submit(req.params.id, castSubmission);
+    const castResult = resultSchema.cast(result, { stripUnknown: true });
+    return res.json(castResult);
+  } catch (e) {
+    return next(e);
+  }
 });
 
 module.exports = router;
