@@ -1,3 +1,109 @@
+// Dijkstra algorithm implementation from:
+// https://levelup.gitconnected.com/finding-the-shortest-path-in-javascript-dijkstras-algorithm-8d16451eea34
+// modified by: Matt
+// find the shortest node function
+const shortestDistanceNode = (nodes, visited, distances) => {
+  // create a default value for shortest
+  let shortest = null;
+
+  // for each node in the distances object
+  for (let i = 0; i < nodes.length; i += 1) {
+    const currNode = nodes[i];
+    // if no node has been assigned to shortest yet
+    // or if the current node's distance is smaller than the current shortest
+    const currentIsShortest = shortest === null || distances[currNode.id] < distances[shortest.id];
+    // and if the current node is in the unvisited set
+    if (currentIsShortest && !visited.includes(currNode)) {
+      // update shortest to be the current node
+      shortest = currNode;
+    }
+  }
+  return shortest;
+};
+
+// returns the neighbors of a node
+const getNeighbors = (node, graph) => {
+  const { nodes, edges } = graph;
+  const neighbors = [];
+  for (let i = 0; i < edges.length; i += 1) {
+    const edge = edges[i];
+    if (edge.fromNodeId === node.id) {
+      neighbors.push(nodes.find((e) => e.id === edge.toNodeId));
+    }
+  }
+  return neighbors;
+};
+
+const findShortestPath = (graph, startNodeId, endNodeId) => {
+  // track distances from the start node using a hash object
+  // set distance of all nodes to infinity
+  const { nodes } = graph;
+  const distances = {};
+  for (let i = 0; i < nodes.length; i += 1) {
+    const node = nodes[i];
+    distances[node.id] = Infinity;
+  }
+  // set distance of start node to be zero
+  distances[startNodeId] = 0;
+
+  // track paths using a hash object
+  const parents = { endNode: null };
+  for (let i = 0; i < nodes.length; i += 1) {
+    const child = nodes[i];
+    parents[child.id] = startNodeId;
+  }
+
+  // collect visited nodes
+  const visited = [];
+  // find the nearest node
+  let node = shortestDistanceNode(nodes, visited, distances);
+
+  // for that node:
+  while (node) {
+    // find its distance from the start node & its child nodes
+    const distance = distances[node.id];
+    const children = getNeighbors(node, graph);
+
+    // for each of the child nodes
+    for (let i = 0; i < children.length; i += 1) {
+      if (children[i].id !== startNodeId) {
+        const childId = children[i].id;
+        // default distance is 1 - for unweighted edges
+        const newdistance = distance + 1;
+        if (!distances[childId] || distances[childId] > newdistance) {
+          // save the distance to the object
+          distances[childId] = newdistance;
+          // record the path
+          parents[childId] = node;
+        }
+      }
+    }
+    // move the current node to the visited set
+    visited.push(node);
+    // move to the nearest neighbor node
+    node = shortestDistanceNode(nodes, visited, distances);
+  }
+
+  // using the stored paths from start node to end node
+  // record the shortest path
+  const shortestPath = [endNodeId];
+  let parent = parents[endNodeId];
+  while (parent) {
+    shortestPath.push(parent.id);
+    parent = parents[parent];
+  }
+  shortestPath.reverse();
+
+  // this is the shortest path
+  const results = {
+    distance: distances[endNodeId],
+    path: shortestPath,
+    visited,
+  };
+  // return the shortest path & the end node's distance from the start node
+  return results;
+};
+
 const initialGraph = {
   width: 400,
   height: 400,
@@ -79,7 +185,8 @@ module.exports = {
   type: 'practice',
   problem: {
     type: 'graphBlockly',
-    question: 'Use the provided blocks to build an algorithm that visits each node of the graph below in any order.',
+    question:
+      'Use the provided blocks to build an algorithm that visits each node of the graph below in any order.',
     data: {
       initialGraph,
       blocks: [
@@ -175,15 +282,53 @@ module.exports = {
     hints: [
       'Drag blocks from the toolbox on the left into the space adjacent, when your happy with your work click run to execute your code',
     ],
-    sections: [{
-      type: 'graph',
-      content: initialGraph,
-    }],
+    sections: [
+      {
+        type: 'graph',
+        content: initialGraph,
+      },
+    ],
   },
   tests: [
+    // 3. Distance from source node to all other nodes  is set to infinity
     {
-      feedback: 'It looks like you haven\'t selected the correct number of nodes.',
-      check: (inputs) => inputs.events.length === initialGraph.nodes.length,
+      feedback:
+        'The distances from the source nodes to all other nodes was not set to infinity at first. Do not forget the Djikstra steps.',
+      check: (inputs) => {
+        const fromNode = inputs.nodes.getNodeById(inputs.sourceNodeId);
+        for (let i = 0; i < inputs.nodes.length; i += 1) {
+          if (fromNode.distance[inputs.nodes[i].id] !== Infinity) {
+            return false;
+          }
+        }
+        return true;
+      },
     },
+    // 4. Distance from source node to source node  is set to zero
+    {
+      feedback: 'Distance from source node to source node  is set to zero',
+      check: (inputs) => {
+        const sourceNode = inputs.nodes.getNodeById(inputs.sourceNodeId);
+        if (sourceNode.distance[inputs.sourceNodeId] !== 0) {
+          return false;
+        }
+        return true;
+      },
+    },
+    // 5. Check the sequence of the visited nodes are correct
+    {
+      feedback:
+        'The nodes are not visited in the correct order. Please make sure of the following two steps: 1. you set the distances from source node to current node correctly, and 2. The minimum distance from the source node is correctly chosen',
+      check: (inputs) => {
+        const result = findShortestPath(initialGraph, inputs.sourceNodeId, inputs.endNodeId);
+        for (let i = 0; i < inputs.visited.length; i += 1) {
+          if (inputs.visited[i].id !== result.visited[i].id) {
+            return false;
+          }
+        }
+        return true;
+      },
+    },
+    // 6. Check how many times set distances have been done
   ],
 };
